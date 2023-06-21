@@ -16,8 +16,16 @@ class MainModel extends ChangeNotifier {
     counter++;
     final uuid = Uuid();
     final String v4 = uuid.v4();
-    // final Map<String, dynamic> userDate = {'userName': 'Alice', 'uid': v4};
-    final FirestoreUser firestoreUser = FirestoreUser(uid: v4, userName: 'Alice');
+    final Timestamp now = Timestamp.now();
+    print(now);
+
+    final FirestoreUser firestoreUser =
+        FirestoreUser(
+          uid: v4,
+          userName: 'Alice',
+          createdAt: now,
+          updatedAt: now
+    );
     final Map<String, dynamic> userData = firestoreUser.toJson();
 
     await FirebaseFirestore.instance.collection('users').doc(v4).set(userData);

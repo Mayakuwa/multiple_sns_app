@@ -1,16 +1,20 @@
+// flutter
 import 'package:flutter/material.dart';
+// packages
 // widgetをグローバルに管理してくれるパッケージだよ
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:first_app/domain/firestore_user/firestore_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+// domain
+import 'package:first_app/domain/firestore_user/firestore_user.dart';
 
 // ViewとModelを橋渡ししてくれるよ
-final mainProvider = ChangeNotifierProvider((ref) => MainModel());
+final signupProvider = ChangeNotifierProvider((ref) => SignupModel());
 
-class MainModel extends ChangeNotifier {
+class SignupModel extends ChangeNotifier {
   int counter = 1;
   User? currentUser = null;
+  // auth
   String email = "";
   String password = "";
   bool isObsucure = true;

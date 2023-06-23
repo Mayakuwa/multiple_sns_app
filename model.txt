@@ -1,0 +1,10 @@
+// flutter
+import 'package:flutter/material.dart';
+// packages
+// widgetをグローバルに管理してくれるパッケージだよ
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// ViewとModelを橋渡ししてくれるよ
+final loginProvider = ChangeNotifierProvider((ref) => LoginModel());
+
+class LoginModel extends ChangeNotifier {}

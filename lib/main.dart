@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 // models
-import 'package:first_app/main_model.dart';
+import 'package:first_app/models/main_model.dart';
 // options
 import 'firebase_options.dart';
+// contains
+import 'package:first_app/constans/routes.dart' as routes;
 
 void main() async {
   // firebase初期化
@@ -44,34 +46,21 @@ class MyHomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // mainProviderを監視する&呼び出す。
     final MainModel mainModel = ref.watch(mainProvider);
-    final TextEditingController emailEditiongController =
-        TextEditingController(text: mainModel.email);
-    final TextEditingController passwordEditingController =
-        TextEditingController(text: mainModel.password);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          TextFormField(
-            keyboardType: TextInputType.emailAddress,
-            onChanged: (text) => mainModel.email = text,
-            controller: emailEditiongController,
+          ElevatedButton(
+            onPressed: () => routes.toSignupPage(context: context),
+            child: Text('サインアップ'),
           ),
-          TextField(
-            keyboardType: TextInputType.visiblePassword,
-            onChanged: (text) => mainModel.password = text,
-            controller: passwordEditingController,
-            obscureText: mainModel.isObsucure,
-            decoration: InputDecoration(
-                suffix: InkWell(
-              child: mainModel.isObsucure
-                  ? Icon(Icons.visibility_off)
-                  : Icon(Icons.visibility),
-              onTap: () => mainModel.toggelIsObsucure(),
-            )),
+          ElevatedButton(
+            onPressed: () => routes.toLoginPage(context: context),
+            child: Text('ログイン'),
           ),
           Center(
             child: mainModel.currentUser == null
@@ -80,11 +69,6 @@ class MyHomePage extends ConsumerWidget {
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async => await mainModel.createUser(context: context),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

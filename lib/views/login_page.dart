@@ -1,13 +1,14 @@
 // flutter
-import 'package:first_app/models/login_model.dart';
 import 'package:flutter/material.dart';
 // flutter package
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // models
 import 'package:first_app/models/login_model.dart';
+import 'package:first_app/models/main_model.dart';
 
 class LoginPage extends ConsumerWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, required MainModel this.mainModel});
+  final MainModel mainModel;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // mainProviderを監視する&呼び出す。
@@ -41,15 +42,11 @@ class LoginPage extends ConsumerWidget {
               onTap: () => loginModel.toggelIsObsucure(),
             )),
           ),
-          Center(
-            child: loginModel.currentUser == null
-                ? Text('nullです')
-                : Text('nullじゃないよ'),
-          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async => await loginModel.login(),
+        onPressed: () async =>
+            await loginModel.login(context: context, mainModel: mainModel),
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

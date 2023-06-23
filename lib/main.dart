@@ -1,4 +1,5 @@
 // flutter
+import 'package:first_app/views/login_page.dart';
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,11 +21,13 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+// Modelを呼び出すためにConsumerWidgetを呼び出す。
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  // WidgetRefでモデル側の橋を読み込む
+  Widget build(BuildContext context, WidgetRef ref) {
+    final MainModel mainModel = ref.watch(mainProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -32,20 +35,22 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: mainModel.currentUser == null
+          ? LoginPage(mainModel: mainModel)
+          : MyHomePage(title: 'Flutter Demo Home Page', mainModel: mainModel),
     );
   }
 }
 
-// Modelを呼び出すためにConsumerWidgetを呼び出す。
-class MyHomePage extends ConsumerWidget {
-  const MyHomePage({super.key, required this.title});
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key, required this.title, required this.mainModel});
+
   final String title;
+  final MainModel mainModel;
+
   @override
-  // WidgetRefでモデル側の橋を読み込む
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     // mainProviderを監視する&呼び出す。
-    final MainModel mainModel = ref.watch(mainProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -59,14 +64,10 @@ class MyHomePage extends ConsumerWidget {
             child: Text('サインアップ'),
           ),
           ElevatedButton(
-            onPressed: () => routes.toLoginPage(context: context),
+            onPressed: () =>
+                routes.toLoginPage(context: context, mainModel: mainModel),
             child: Text('ログイン'),
           ),
-          Center(
-            child: mainModel.currentUser == null
-                ? Text('nullです')
-                : Text('nullじゃないよ'),
-          )
         ],
       ),
     );

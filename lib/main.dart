@@ -44,24 +44,33 @@ class MyHomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // mainProviderを監視する&呼び出す。
     final MainModel mainModel = ref.watch(mainProvider);
+    final TextEditingController emailEditiongController =
+        TextEditingController(text: mainModel.email);
+    final TextEditingController passwordEditingController =
+        TextEditingController(text: mainModel.password);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '${mainModel.counter}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: Column(
+        children: [
+          TextFormField(
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (text) => mainModel.email = text,
+            controller: emailEditiongController,
+          ),
+          TextField(
+            keyboardType: TextInputType.visiblePassword,
+            onChanged: (text) => mainModel.password = text,
+            controller: passwordEditingController,
+          ),
+          Center(
+            child: mainModel.currentUser == null
+                ? Text('nullです')
+                : Text('nullじゃないよ'),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async => await mainModel.createUser(context: context),

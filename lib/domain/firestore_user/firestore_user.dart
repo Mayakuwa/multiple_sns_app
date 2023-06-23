@@ -9,10 +9,12 @@ part 'firestore_user.g.dart';
 @freezed
 abstract class FirestoreUser with _$FirestoreUser {
   const factory FirestoreUser({
+    required String uid,
+    required String userName,
+    required String email,
     required dynamic createdAt,
     required dynamic updatedAt,
-    required String userName,
-    required String uid}) =
-      _FirestoreUser;
-  factory FirestoreUser.fromJson(Map<String, dynamic> json) => _$FirestoreUserFromJson(json);
+  }) = _FirestoreUser;
+  factory FirestoreUser.fromJson(Map<String, dynamic> json) =>
+      _$FirestoreUserFromJson(json);
 }

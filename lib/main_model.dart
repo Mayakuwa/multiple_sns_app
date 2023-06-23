@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // widgetをグローバルに管理してくれるパッケージだよ
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:uuid/uuid.dart';
 import 'package:first_app/domain/firestore_user/firestore_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -14,12 +13,11 @@ class MainModel extends ChangeNotifier {
   User? currentUser = null;
   String email = "";
   String password = "";
+  bool isObsucure = true;
 // setStateはstatefulwidgetでしか使えないよ。変更を知らせるにはnotifyListenersを使う
   Future<void> createFirestoreUser(
       {required BuildContext context, required String uid}) async {
     counter++;
-    final uuid = Uuid();
-    final String v4 = uuid.v4();
     final Timestamp now = Timestamp.now();
     final FirestoreUser firestoreUser = FirestoreUser(
         uid: uid,
@@ -47,5 +45,11 @@ class MainModel extends ChangeNotifier {
     } on FirebaseAuthException catch (e) {
       print(e.toString());
     }
+  }
+
+  void toggelIsObsucure() {
+    //反対にする
+    isObsucure = !isObsucure;
+    notifyListeners();
   }
 }

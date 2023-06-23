@@ -64,6 +64,14 @@ class MyHomePage extends ConsumerWidget {
             keyboardType: TextInputType.visiblePassword,
             onChanged: (text) => mainModel.password = text,
             controller: passwordEditingController,
+            obscureText: mainModel.isObsucure,
+            decoration: InputDecoration(
+                suffix: InkWell(
+              child: mainModel.isObsucure
+                  ? Icon(Icons.visibility_off)
+                  : Icon(Icons.visibility),
+              onTap: () => mainModel.toggelIsObsucure(),
+            )),
           ),
           Center(
             child: mainModel.currentUser == null

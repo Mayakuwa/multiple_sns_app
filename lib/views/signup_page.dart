@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:first_app/models/signup_model.dart';
 // components
 import 'package:first_app/details/rounded_text_field.dart';
+import 'package:first_app/details/rounded_password_field.dart';
 
 class SignupPage extends ConsumerWidget {
   const SignupPage({super.key});
@@ -23,12 +24,8 @@ class SignupPage extends ConsumerWidget {
         title: Text('サインアップ'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // TextFormField(
-          //   keyboardType: TextInputType.emailAddress,
-          //   onChanged: (text) => signupModel.email = text,
-          //   controller: emailEditiongController,
-          // ),
           RounedTextField(
             keybordType: TextInputType.emailAddress,
             onChanged: (text) => signupModel.email = text,
@@ -37,23 +34,14 @@ class SignupPage extends ConsumerWidget {
             borderColor: Colors.black,
             shadowColor: Colors.purple,
           ),
-          TextField(
-            keyboardType: TextInputType.visiblePassword,
+          RounedPassWordField(
             onChanged: (text) => signupModel.password = text,
-            controller: passwordEditingController,
-            obscureText: signupModel.isObsucure,
-            decoration: InputDecoration(
-                suffix: InkWell(
-              child: signupModel.isObsucure
-                  ? Icon(Icons.visibility_off)
-                  : Icon(Icons.visibility),
-              onTap: () => signupModel.toggelIsObsucure(),
-            )),
-          ),
-          Center(
-            child: signupModel.currentUser == null
-                ? Text('nullです')
-                : Text('nullじゃないよ'),
+            passwordEditingController: passwordEditingController,
+            obsucreText: signupModel.isObsucure,
+            toggleObscureText: () => signupModel.toggelIsObsucure(),
+            color: Colors.white,
+            borderColor: Colors.black,
+            shadowColor: Colors.purple
           )
         ],
       ),

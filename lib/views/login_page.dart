@@ -5,6 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 // models
 import 'package:first_app/models/login_model.dart';
 import 'package:first_app/models/main_model.dart';
+// components
+import 'package:first_app/details/rounded_text_field.dart';
+import 'package:first_app/details/rounded_password_field.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key, required MainModel this.mainModel});
@@ -23,25 +26,25 @@ class LoginPage extends ConsumerWidget {
         title: Text('ログイン'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          TextFormField(
-            keyboardType: TextInputType.emailAddress,
+          RounedTextField(
+            keybordType: TextInputType.emailAddress,
             onChanged: (text) => loginModel.email = text,
             controller: emailEditiongController,
+            color: Colors.white,
+            borderColor: Colors.black,
+            shadowColor: Colors.red,
           ),
-          TextField(
-            keyboardType: TextInputType.visiblePassword,
+          RounedPassWordField(
             onChanged: (text) => loginModel.password = text,
-            controller: passwordEditingController,
-            obscureText: loginModel.isObsucure,
-            decoration: InputDecoration(
-                suffix: InkWell(
-              child: loginModel.isObsucure
-                  ? Icon(Icons.visibility_off)
-                  : Icon(Icons.visibility),
-              onTap: () => loginModel.toggelIsObsucure(),
-            )),
-          ),
+            passwordEditingController: passwordEditingController,
+            obsucreText: loginModel.isObsucure,
+            toggleObscureText: () => loginModel.toggelIsObsucure(),
+            color: Colors.white,
+            borderColor: Colors.black,
+            shadowColor: Colors.red
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(

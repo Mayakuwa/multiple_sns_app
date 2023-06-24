@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // models
 import 'package:first_app/models/signup_model.dart';
+// components
+import 'package:first_app/details/rounded_text_field.dart';
 
 class SignupPage extends ConsumerWidget {
   const SignupPage({super.key});
@@ -22,10 +24,18 @@ class SignupPage extends ConsumerWidget {
       ),
       body: Column(
         children: [
-          TextFormField(
-            keyboardType: TextInputType.emailAddress,
+          // TextFormField(
+          //   keyboardType: TextInputType.emailAddress,
+          //   onChanged: (text) => signupModel.email = text,
+          //   controller: emailEditiongController,
+          // ),
+          RounedTextField(
+            keybordType: TextInputType.emailAddress,
             onChanged: (text) => signupModel.email = text,
             controller: emailEditiongController,
+            color: Colors.white,
+            borderColor: Colors.black,
+            shadowColor: Colors.purple,
           ),
           TextField(
             keyboardType: TextInputType.visiblePassword,

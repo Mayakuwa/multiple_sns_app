@@ -1,4 +1,5 @@
 // flutter
+import 'package:first_app/constants/strings.dart';
 import 'package:flutter/material.dart';
 // packages
 // widgetをグローバルに管理してくれるパッケージだよ
@@ -25,16 +26,19 @@ class SignupModel extends ChangeNotifier {
     final Timestamp now = Timestamp.now();
     final FirestoreUser firestoreUser = FirestoreUser(
         uid: uid,
-        userName: 'Alice',
+        userName: aliceName,
         email: email,
         createdAt: now,
         updatedAt: now);
     final Map<String, dynamic> userData = firestoreUser.toJson();
 
-    await FirebaseFirestore.instance.collection('users').doc(uid).set(userData);
+    await FirebaseFirestore.instance
+        .collection(usersFieldkey)
+        .doc(uid)
+        .set(userData);
 
     ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('ユーザが作成されたよ')));
+        .showSnackBar(SnackBar(content: Text(userCreateMsg)));
     notifyListeners();
   }
 

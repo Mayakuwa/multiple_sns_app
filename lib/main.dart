@@ -9,10 +9,11 @@ import 'package:first_app/models/main_model.dart';
 // options
 import 'firebase_options.dart';
 // contains
-import 'package:first_app/constans/routes.dart' as routes;
+import 'package:first_app/constants/routes.dart' as routes;
 // components
 import 'package:first_app/details/rounded_button.dart';
-
+// constans
+import 'package:first_app/constants/strings.dart';
 
 void main() async {
   // firebase初期化
@@ -33,14 +34,14 @@ class MyApp extends ConsumerWidget {
     final MainModel mainModel = ref.watch(mainProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: appTitle,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: mainModel.currentUser == null
           ? LoginPage(mainModel: mainModel)
-          : MyHomePage(title: 'Flutter Demo Home Page', mainModel: mainModel),
+          : MyHomePage(title: appTitle, mainModel: mainModel),
     );
   }
 }
@@ -55,30 +56,31 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // mainProviderを監視する&呼び出す。
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(title),
-      ),
-      body: Center(
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          RoundedButton(
-            onPressed: () => routes.toSignupPage(context: context),
-            withRate: 0.5,
-            color: Colors.purple,
-            textColor: Colors.white,
-            text: 'サインアップ',
-          ),
-          RoundedButton(
-            onPressed: () => routes.toLoginPage(context: context, mainModel: mainModel),
-            withRate: 0.5,
-            color: Colors.purple,
-            textColor: Colors.white,
-            text: 'ログイン',
-          ),],
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(title),
         ),
-      )
-    );
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              RoundedButton(
+                onPressed: () => routes.toSignupPage(context: context),
+                withRate: 0.5,
+                color: Colors.purple,
+                textColor: Colors.white,
+                text: singupTitle,
+              ),
+              RoundedButton(
+                onPressed: () =>
+                    routes.toLoginPage(context: context, mainModel: mainModel),
+                withRate: 0.5,
+                color: Colors.purple,
+                textColor: Colors.white,
+                text: loginTitle,
+              ),
+            ],
+          ),
+        ));
   }
 }

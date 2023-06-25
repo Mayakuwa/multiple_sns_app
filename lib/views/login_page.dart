@@ -9,6 +9,8 @@ import 'package:first_app/models/main_model.dart';
 import 'package:first_app/details/rounded_text_field.dart';
 import 'package:first_app/details/rounded_password_field.dart';
 import 'package:first_app/details/rounded_button.dart';
+// constans
+import 'package:first_app/constants/strings.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key, required MainModel this.mainModel});
@@ -24,7 +26,7 @@ class LoginPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('ログイン'),
+        title: const Text(loginTitle),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -36,7 +38,7 @@ class LoginPage extends ConsumerWidget {
             color: Colors.white,
             borderColor: Colors.black,
             shadowColor: Colors.red,
-            hintText: 'ログイン用のメールアドレス',
+            hintText: mailAddressText,
           ),
           RounedPassWordField(
               onChanged: (text) => loginModel.password = text,
@@ -48,11 +50,11 @@ class LoginPage extends ConsumerWidget {
               shadowColor: Colors.red),
           RoundedButton(
             onPressed: () async =>
-              await loginModel.login(context: context, mainModel: mainModel),
+                await loginModel.login(context: context, mainModel: mainModel),
             withRate: 0.85,
             color: Colors.purple,
             textColor: Colors.white,
-            text: 'ログイン',
+            text: loginText,
           )
         ],
       ),

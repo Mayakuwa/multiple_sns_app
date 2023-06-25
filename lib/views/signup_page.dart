@@ -8,6 +8,8 @@ import 'package:first_app/models/signup_model.dart';
 import 'package:first_app/details/rounded_text_field.dart';
 import 'package:first_app/details/rounded_password_field.dart';
 import 'package:first_app/details/rounded_button.dart';
+// constans
+import 'package:first_app/constants/strings.dart';
 
 class SignupPage extends ConsumerWidget {
   const SignupPage({super.key});
@@ -22,7 +24,7 @@ class SignupPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('サインアップ'),
+        title: const Text(singupTitle),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -34,7 +36,7 @@ class SignupPage extends ConsumerWidget {
             color: Colors.white,
             borderColor: Colors.black,
             shadowColor: Colors.purple,
-            hintText: '新規登録用のメールアドレス',
+            hintText: mailAddressText,
           ),
           RounedPassWordField(
               onChanged: (text) => signupModel.password = text,
@@ -45,11 +47,12 @@ class SignupPage extends ConsumerWidget {
               borderColor: Colors.black,
               shadowColor: Colors.purple),
           RoundedButton(
-            onPressed: () async => await signupModel.createUser(context: context),
+            onPressed: () async =>
+                await signupModel.createUser(context: context),
             withRate: 0.85,
             color: Colors.purple,
             textColor: Colors.white,
-            text: '新規登録',
+            text: signupText,
           )
         ],
       ),

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 //constans
-import 'package:first_app/constans/routes.dart' as routes;
+import 'package:first_app/constants/routes.dart' as routes;
 
 // ViewとModelを橋渡ししてくれるよ
 final loginProvider = ChangeNotifierProvider((ref) => LoginModel());

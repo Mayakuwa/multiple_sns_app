@@ -1,6 +1,8 @@
 // flutter
 import 'package:first_app/details/text_field_container.dart';
 import 'package:flutter/material.dart';
+// constans
+import 'package:first_app/constants/strings.dart';
 
 class RounedPassWordField extends StatelessWidget {
   const RounedPassWordField(
@@ -36,7 +38,7 @@ class RounedPassWordField extends StatelessWidget {
                   : Icon(Icons.visibility),
               onTap: toggleObscureText,
             ),
-            hintText: 'パスワード',
+            hintText: passwordText,
             hintStyle: TextStyle(fontWeight: FontWeight.bold)),
       ),
     );

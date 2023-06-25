@@ -7,6 +7,7 @@ import 'package:first_app/models/signup_model.dart';
 // components
 import 'package:first_app/details/rounded_text_field.dart';
 import 'package:first_app/details/rounded_password_field.dart';
+import 'package:first_app/details/rounded_button.dart';
 
 class SignupPage extends ConsumerWidget {
   const SignupPage({super.key});
@@ -33,23 +34,25 @@ class SignupPage extends ConsumerWidget {
             color: Colors.white,
             borderColor: Colors.black,
             shadowColor: Colors.purple,
+            hintText: '新規登録用のメールアドレス',
           ),
           RounedPassWordField(
-            onChanged: (text) => signupModel.password = text,
-            passwordEditingController: passwordEditingController,
-            obsucreText: signupModel.isObsucure,
-            toggleObscureText: () => signupModel.toggelIsObsucure(),
-            color: Colors.white,
-            borderColor: Colors.black,
-            shadowColor: Colors.purple
+              onChanged: (text) => signupModel.password = text,
+              passwordEditingController: passwordEditingController,
+              obsucreText: signupModel.isObsucure,
+              toggleObscureText: () => signupModel.toggelIsObsucure(),
+              color: Colors.white,
+              borderColor: Colors.black,
+              shadowColor: Colors.purple),
+          RoundedButton(
+            onPressed: () async => await signupModel.createUser(context: context),
+            withRate: 0.85,
+            color: Colors.purple,
+            textColor: Colors.white,
+            text: '新規登録',
           )
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async => await signupModel.createUser(context: context),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

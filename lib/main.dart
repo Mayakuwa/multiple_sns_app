@@ -10,6 +10,9 @@ import 'package:first_app/models/main_model.dart';
 import 'firebase_options.dart';
 // contains
 import 'package:first_app/constans/routes.dart' as routes;
+// components
+import 'package:first_app/details/rounded_button.dart';
+
 
 void main() async {
   // firebase初期化
@@ -56,20 +59,26 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      body: Column(
+      body: Center(
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          ElevatedButton(
+          RoundedButton(
             onPressed: () => routes.toSignupPage(context: context),
-            child: Text('サインアップ'),
+            withRate: 0.5,
+            color: Colors.purple,
+            textColor: Colors.white,
+            text: 'サインアップ',
           ),
-          ElevatedButton(
-            onPressed: () =>
-                routes.toLoginPage(context: context, mainModel: mainModel),
-            child: Text('ログイン'),
-          ),
-        ],
-      ),
+          RoundedButton(
+            onPressed: () => routes.toLoginPage(context: context, mainModel: mainModel),
+            withRate: 0.5,
+            color: Colors.purple,
+            textColor: Colors.white,
+            text: 'ログイン',
+          ),],
+        ),
+      )
     );
   }
 }

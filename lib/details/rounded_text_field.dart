@@ -10,14 +10,15 @@ class RounedTextField extends StatelessWidget {
       required this.controller,
       required this.color,
       required this.borderColor,
-      required this.shadowColor
-  });
+      required this.shadowColor,
+      required this.hintText});
   final TextInputType keybordType;
   final void Function(String)? onChanged;
   final TextEditingController? controller;
   final Color color;
   final Color borderColor;
   final Color shadowColor;
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +29,9 @@ class RounedTextField extends StatelessWidget {
       child: TextFormField(
         keyboardType: keybordType,
         onChanged: onChanged,
+        decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(fontWeight: FontWeight.bold)),
         controller: controller,
       ),
     );

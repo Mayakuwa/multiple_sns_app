@@ -3,16 +3,15 @@ import 'package:first_app/details/text_field_container.dart';
 import 'package:flutter/material.dart';
 
 class RounedPassWordField extends StatelessWidget {
-  const RounedPassWordField({
-    Key? key,
-    required this.onChanged,
-    required this.passwordEditingController,
-    required this.obsucreText,
-    required this.toggleObscureText,
-    required this.color,
-    required this.borderColor,
-    required this.shadowColor
-  });
+  const RounedPassWordField(
+      {Key? key,
+      required this.onChanged,
+      required this.passwordEditingController,
+      required this.obsucreText,
+      required this.toggleObscureText,
+      required this.color,
+      required this.borderColor,
+      required this.shadowColor});
   final void Function(String)? onChanged;
   final TextEditingController passwordEditingController;
   final bool obsucreText;
@@ -32,10 +31,13 @@ class RounedPassWordField extends StatelessWidget {
         obscureText: obsucreText,
         decoration: InputDecoration(
             suffix: InkWell(
-          child:
-              obsucreText ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
-          onTap: toggleObscureText,
-        )),
+              child: obsucreText
+                  ? Icon(Icons.visibility_off)
+                  : Icon(Icons.visibility),
+              onTap: toggleObscureText,
+            ),
+            hintText: 'パスワード',
+            hintStyle: TextStyle(fontWeight: FontWeight.bold)),
       ),
     );
   }

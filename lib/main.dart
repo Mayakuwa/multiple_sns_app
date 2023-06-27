@@ -15,6 +15,9 @@ import 'firebase_options.dart';
 import 'package:first_app/constants/routes.dart' as routes;
 // components
 import 'package:first_app/details/rounded_button.dart';
+import 'package:first_app/views/main/home_screen.dart';
+import 'package:first_app/views/main/search_screen.dart';
+import 'package:first_app/views/main/profile_screen.dart';
 // constans
 import 'package:first_app/constants/strings.dart';
 
@@ -74,11 +77,9 @@ class MyHomePage extends ConsumerWidget {
               onPageChanged: (index) =>
                   snsBottomNavigationBarModel.onPageChanged(index: index),
               children: [
-                Container(child: Text(homeText)),
-                Container(child: Text(searchText)),
-                Container(
-                  child: Text(profileText),
-                )
+                HomeScreen(),
+                SearchScreen(),
+                ProfileScreen(mainmodel: mainModel)
               ],
             ),
       bottomNavigationBar: SnsBottomNavigationBar(

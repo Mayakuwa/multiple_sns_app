@@ -1,4 +1,4 @@
-import 'package:first_app/constants/strings.dart';
+// flutter
 import 'package:flutter/material.dart';
 // packages
 // widgetをグローバルに管理してくれるパッケージだよ
@@ -7,6 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // constans
 import 'package:first_app/constants/routes.dart' as routes;
+import 'package:first_app/constants/strings.dart';
+// domain
+import 'package:first_app/domain/firestore_user/firestore_user.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final mainProvider = ChangeNotifierProvider((ref) => MainModel());
@@ -17,6 +20,7 @@ class MainModel extends ChangeNotifier {
   User? currentUser = null;
   // lateで後で定める
   late DocumentSnapshot<Map<String, dynamic>> currentUserDoc;
+  late FirestoreUser firestoreUser;
 
   MainModel() {
     init();
@@ -32,6 +36,7 @@ class MainModel extends ChangeNotifier {
         .collection(usersFieldkey)
         .doc(currentUser!.uid)
         .get();
+    firestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
     // current Userのuidの取得が可能になりました
     endLoading();
   }

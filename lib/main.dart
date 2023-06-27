@@ -1,5 +1,4 @@
 // flutter
-import 'package:first_app/details/sns_bottom_navigation_bar.dart';
 import 'package:first_app/models/sns_bottom_navigation_bar_model.dart';
 import 'package:first_app/views/login_page.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,7 @@ import 'firebase_options.dart';
 // contains
 import 'package:first_app/constants/routes.dart' as routes;
 // components
+import 'package:first_app/details/sns_bottom_navigation_bar.dart';
 import 'package:first_app/details/rounded_button.dart';
 import 'package:first_app/views/main/home_screen.dart';
 import 'package:first_app/views/main/search_screen.dart';

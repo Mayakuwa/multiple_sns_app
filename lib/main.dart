@@ -35,14 +35,15 @@ class MyApp extends StatelessWidget {
     // アプリが起動した時に最初の時にユーザがログインしているかの確認。（1回しか使えない）
     final User? onceUser = FirebaseAuth.instance.currentUser;
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: appTitle,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: onceUser == null ? LoginPage() : MyHomePage(title: appTitle),
-    );
+        debugShowCheckedModeBanner: false,
+        title: appTitle,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: onceUser == null
+            ? const LoginPage()
+            : const MyHomePage(title: appTitle));
   }
 }
 
@@ -60,7 +61,7 @@ class MyHomePage extends ConsumerWidget {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(title),
         ),
-        body: mainModel.isLoading == true
+        body: mainModel.isLoading
             ? Center(
                 child: Text(loadingText),
               )
@@ -68,24 +69,23 @@ class MyHomePage extends ConsumerWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    RoundedButton(
-                      onPressed: () => routes.toSignupPage(context: context),
-                      withRate: 0.5,
-                      color: Colors.purple,
-                      textColor: Colors.white,
-                      text: signupText,
-                    ),
-                    RoundedButton(
-                      onPressed: () => routes.toLoginPage(context: context),
-                      withRate: 0.5,
-                      color: Colors.purple,
-                      textColor: Colors.white,
-                      text: loginText,
-                    ),
+                    // RoundedButton(
+                    //   onPressed: () => routes.toSignupPage(context: context),
+                    //   withRate: 0.5,
+                    //   color: Colors.purple,
+                    //   textColor: Colors.white,
+                    //   text: signupText,
+                    // ),
+                    // RoundedButton(
+                    //   onPressed: () => routes.toLoginPage(context: context),
+                    //   withRate: 0.5,
+                    //   color: Colors.purple,
+                    //   textColor: Colors.white,
+                    //   text: loginText,
+                    // ),
                     Center(
-                      child: Text('私の名前は' +
-                          mainModel.currentUserDoc['userName'] +
-                          'です'),
+                      child: Text(
+                          "私の名前は${mainModel.currentUserDoc['userName']}です"),
                     ),
                     RoundedButton(
                       onPressed: () async => await mainModel.logout(

@@ -17,14 +17,12 @@ class LoginModel extends ChangeNotifier {
   String password = "";
   bool isObsucure = true;
 
-  Future<void> login(
-      {required BuildContext context, required MainModel mainModel}) async {
+  Future<void> login({required BuildContext context}) async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       // マイページに遷移
       routes.toMyapp(context: context);
-      mainModel.setCurrentUser();
     } on FirebaseAuthException catch (e) {
       print(e.toString());
     }

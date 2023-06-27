@@ -13,8 +13,7 @@ import 'package:first_app/details/rounded_button.dart';
 import 'package:first_app/constants/strings.dart';
 
 class LoginPage extends ConsumerWidget {
-  const LoginPage({super.key, required MainModel this.mainModel});
-  final MainModel mainModel;
+  const LoginPage({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // mainProviderを監視する&呼び出す。
@@ -49,8 +48,7 @@ class LoginPage extends ConsumerWidget {
               borderColor: Colors.black,
               shadowColor: Colors.red),
           RoundedButton(
-            onPressed: () async =>
-                await loginModel.login(context: context, mainModel: mainModel),
+            onPressed: () async => await loginModel.login(context: context),
             withRate: 0.85,
             color: Colors.purple,
             textColor: Colors.white,

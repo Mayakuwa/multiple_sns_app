@@ -69,7 +69,7 @@ class MyHomePage extends StatelessWidget {
                 withRate: 0.5,
                 color: Colors.purple,
                 textColor: Colors.white,
-                text: singupTitle,
+                text: signupText,
               ),
               RoundedButton(
                 onPressed: () =>
@@ -77,7 +77,15 @@ class MyHomePage extends StatelessWidget {
                 withRate: 0.5,
                 color: Colors.purple,
                 textColor: Colors.white,
-                text: loginTitle,
+                text: loginText,
+              ),
+              RoundedButton(
+                onPressed: () async => await mainModel.logout(
+                    context: context, mainModel: mainModel),
+                withRate: 0.5,
+                color: Colors.purple,
+                textColor: Colors.white,
+                text: logoutText,
               ),
             ],
           ),

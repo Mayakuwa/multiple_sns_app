@@ -8,6 +8,8 @@ const String mailAddressText = 'メールアドレス';
 const String passwordText = 'パスワード';
 const String signupText = '新規登録を行う';
 const String loginText = 'ログインする';
+const String logoutText = 'ログアウトする';
+
 // name
 const String aliceName = 'Alice';
 // fieldkey

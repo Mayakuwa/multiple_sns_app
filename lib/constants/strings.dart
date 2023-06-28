@@ -6,6 +6,7 @@ import 'package:uuid/uuid.dart';
 const String appTitle = 'SNS';
 const String singupTitle = '新規登録';
 const String loginTitle = 'ログイン';
+const String cropperTitle = 'Cropper';
 // BottomNavigationBar
 const String homeText = 'Home';
 const String searchText = 'Search';

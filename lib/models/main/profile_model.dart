@@ -13,29 +13,29 @@ import 'package:first_app/constants/others.dart';
 final profileProvider = ChangeNotifierProvider((ref) => ProfileModel());
 
 class ProfileModel extends ChangeNotifier {
-  XFile? xFile;
+  File? croppedFile;
 
+  // Firebaseに画像をアップロードし、リターンする
   Future<String> uploadImageAndGetURL(
       {required String uid, required File file}) async {
     final String filename = returnJpgFileName();
-    final Reference storageRef = await FirebaseStorage.instance
-        .ref()
-        .child("user")
-        .child(uid)
-        .child(filename);
+    final Reference storageRef =
+        FirebaseStorage.instance.ref().child("user").child(uid).child(filename);
     // users/uid/ファイル名にアップロード
     await storageRef.putFile(file);
     // users/uid/ファイル名のURLを取得している
     return await storageRef.getDownloadURL();
   }
 
+  // 画像を画面にアップロードする
   Future<void> uploadUserImage(
       {required DocumentSnapshot<Map<String, dynamic>> currentUserDoc}) async {
     // 端末上にある写真を変換したのがXfile
-    xFile = await returnXFile();
+    final XFile xFile = await returnXFile();
     // Xfileのパス。どこにあるのかを取得
-    final File file = File(xFile!.path);
+    final File file = File(xFile.path);
     final uid = currentUserDoc.id;
+    croppedFile = await returnCroppedFile(xFile: xFile);
     final String url = await uploadImageAndGetURL(uid: uid, file: file);
     // 現在ログイン中のユーザのリファレンスを取得
     await currentUserDoc.reference.update({'userImageURL': url});

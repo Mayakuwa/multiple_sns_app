@@ -15,10 +15,15 @@ class ProfileScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfileModel profileModel = ref.watch(profileProvider);
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      profileModel.xFile == null
+      profileModel.croppedFile == null
           ? UserImage(
               lenght: 100, userImageURL: mainmodel.firestoreUser.userImageURL)
-          : Text('loading'),
+          : ClipRRect(
+              borderRadius: BorderRadius.circular(200),
+              child: Image.file(
+                profileModel.croppedFile!,
+              ),
+            ),
       RoundedButton(
           onPressed: () async {
             await profileModel.uploadUserImage(
@@ -27,7 +32,10 @@ class ProfileScreen extends ConsumerWidget {
           withRate: 0.85,
           color: Colors.purple,
           textColor: Colors.white,
-          text: 'upload')
+          text: 'upload'),
+      ElevatedButton(
+          onPressed: () => print(profileModel.croppedFile == null),
+          child: Text('デバッグ'))
     ]);
   }
 }

@@ -21,7 +21,8 @@ class ProfileScreen extends ConsumerWidget {
           : Text('loading'),
       RoundedButton(
           onPressed: () async {
-            // await profileModel.uploadImage();
+            await profileModel.uploadUserImage(
+                currentUserDoc: mainmodel.currentUserDoc);
           },
           withRate: 0.85,
           color: Colors.purple,

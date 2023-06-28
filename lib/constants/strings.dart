@@ -1,3 +1,6 @@
+// packages
+import 'package:uuid/uuid.dart';
+
 // 日本語だと'サインアップ'、英語だと'signup'後々国際対応
 // titles
 const String appTitle = 'SNS';
@@ -21,3 +24,9 @@ const String usersFieldkey = 'users';
 // messages
 const String userCreateMsg = 'ユーザーが作成できました';
 // uui
+String returnUuidV4() {
+  const Uuid uuid = Uuid();
+  return uuid.v4();
+}
+
+String returnJpgFileName() => "${returnUuidV4()}.jpg";

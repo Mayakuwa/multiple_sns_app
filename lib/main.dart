@@ -69,7 +69,7 @@ class MyHomePage extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
-      drawer: SnsDrawer(),
+      drawer: SnsDrawer(mainModel: mainModel),
       body: mainModel.isLoading
           ? Center(
               child: Text(loadingText),

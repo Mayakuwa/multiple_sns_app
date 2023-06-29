@@ -18,6 +18,7 @@ import 'package:first_app/details/rounded_button.dart';
 import 'package:first_app/views/main/home_screen.dart';
 import 'package:first_app/views/main/search_screen.dart';
 import 'package:first_app/views/main/profile_screen.dart';
+import 'package:first_app/details/sns_drawer.dart';
 // constans
 import 'package:first_app/constants/strings.dart';
 
@@ -68,6 +69,7 @@ class MyHomePage extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(title),
       ),
+      drawer: SnsDrawer(),
       body: mainModel.isLoading
           ? Center(
               child: Text(loadingText),

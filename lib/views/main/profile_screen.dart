@@ -14,7 +14,9 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ProfileModel profileModel = ref.watch(profileProvider);
-    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
       profileModel.croppedFile == null
           ? UserImage(
               lenght: 100, userImageURL: mainmodel.firestoreUser.userImageURL)

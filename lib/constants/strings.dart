@@ -8,6 +8,7 @@ const String singupTitle = '新規登録';
 const String loginTitle = 'ログイン';
 const String cropperTitle = 'Cropper';
 const String accountTitle = 'アカウント';
+const String themeTitle = 'テーマ';
 // BottomNavigationBar
 const String homeText = 'Home';
 const String searchText = 'Search';

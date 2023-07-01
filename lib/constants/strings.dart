@@ -20,6 +20,7 @@ const String signupText = '新規登録を行う';
 const String loginText = 'ログインする';
 const String logoutText = 'ログアウトする';
 const String loadingText = 'Loading';
+const String uploadText = 'アップロードする';
 // name
 const String aliceName = 'Alice';
 // fieldkey

@@ -47,24 +47,20 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: appTitle,
-        theme: themeModel.isDarkTheme ?
-          darkThemeData(context: context) :
-          lightThemeData(context: context),
+        theme: themeModel.isDarkTheme
+            ? darkThemeData(context: context)
+            : lightThemeData(context: context),
         home: onceUser == null
             ? const LoginPage()
             : MyHomePage(
-              title: appTitle,
-              themeModel: themeModel,
-            ));
+                title: appTitle,
+                themeModel: themeModel,
+              ));
   }
 }
 
 class MyHomePage extends ConsumerWidget {
-  const MyHomePage({
-    super.key,
-    required this.title,
-    required this.themeModel
-  });
+  const MyHomePage({super.key, required this.title, required this.themeModel});
   final String title;
   final ThemeModel themeModel;
 
@@ -79,10 +75,7 @@ class MyHomePage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      drawer: SnsDrawer(
-        mainModel: mainModel,
-        themeModel: themeModel
-      ),
+      drawer: SnsDrawer(mainModel: mainModel, themeModel: themeModel),
       body: mainModel.isLoading
           ? Center(
               child: Text(loadingText),
@@ -94,7 +87,7 @@ class MyHomePage extends ConsumerWidget {
               children: [
                 HomeScreen(),
                 SearchScreen(),
-                ProfileScreen(mainmodel: mainModel)
+                ProfileScreen(mainModel: mainModel)
               ],
             ),
       bottomNavigationBar: SnsBottomNavigationBar(

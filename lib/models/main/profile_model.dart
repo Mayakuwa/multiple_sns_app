@@ -1,6 +1,8 @@
 // flutter
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/constants/strings.dart';
+import 'package:first_app/domain/firestore_user/firestore_user.dart';
+import 'package:first_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -39,6 +41,20 @@ class ProfileModel extends ChangeNotifier {
     final String url = await uploadImageAndGetURL(uid: uid, file: file);
     // 現在ログイン中のユーザのリファレンスを取得
     await currentUserDoc.reference.update({'userImageURL': url});
+    notifyListeners();
+  }
+
+  void follow(
+      {required MainModel mainModel,
+      required FirestoreUser passiveFirestoreUser}) {
+    mainModel.followingUids.add(passiveFirestoreUser.uid);
+    notifyListeners();
+  }
+
+  void unfollow(
+      {required MainModel mainMode,
+      required FirestoreUser passiveFirestoreUser}) {
+    mainMode.followingUids.remove(passiveFirestoreUser.uid);
     notifyListeners();
   }
 }

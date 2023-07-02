@@ -1,5 +1,4 @@
 // flutter
-import 'package:first_app/constants/strings.dart';
 import 'package:flutter/material.dart';
 // packages
 // widgetをグローバルに管理してくれるパッケージだよ
@@ -8,6 +7,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // domain
 import 'package:first_app/domain/firestore_user/firestore_user.dart';
+// constants
+import 'package:first_app/constants/strings.dart';
+import 'package:first_app/constants/routes.dart' as routes;
 
 // ViewとModelを橋渡ししてくれるよ
 final signupProvider = ChangeNotifierProvider((ref) => SignupModel());
@@ -53,6 +55,7 @@ class SignupModel extends ChangeNotifier {
       final User? user = result.user;
       final String uid = user!.uid;
       await createFirestoreUser(context: context, uid: uid);
+      routes.toMyapp(context: context);
     } on FirebaseAuthException catch (e) {
       print(e.toString());
     }

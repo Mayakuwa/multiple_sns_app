@@ -11,19 +11,17 @@ class RounedPassWordField extends StatelessWidget {
       required this.passwordEditingController,
       required this.obsucreText,
       required this.toggleObscureText,
-      required this.color,
       required this.borderColor,
       required this.shadowColor});
   final void Function(String)? onChanged;
   final TextEditingController passwordEditingController;
   final bool obsucreText;
   final void Function()? toggleObscureText;
-  final Color color, borderColor, shadowColor;
+  final Color borderColor, shadowColor;
 
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
-      color: color,
       borderColor: borderColor,
       shadowColor: shadowColor,
       child: TextFormField(

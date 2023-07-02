@@ -9,6 +9,7 @@ const String loginTitle = 'ログイン';
 const String cropperTitle = 'Cropper';
 const String accountTitle = 'アカウント';
 const String themeTitle = 'テーマ';
+const String profileTitle = 'プロフィール';
 // BottomNavigationBar
 const String homeText = 'Home';
 const String searchText = 'Search';
@@ -27,6 +28,7 @@ const String aliceName = 'Alice';
 const String usersFieldkey = 'users';
 // messages
 const String userCreateMsg = 'ユーザーが作成できました';
+const String noAccountMsg = 'アカウントをお持ちでない場合';
 // pref key
 const String isDarkThemePrefsKey = 'isDarkTheme';
 // uui

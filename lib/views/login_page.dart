@@ -11,6 +11,8 @@ import 'package:first_app/details/rounded_password_field.dart';
 import 'package:first_app/details/rounded_button.dart';
 // constans
 import 'package:first_app/constants/strings.dart';
+// routes
+import 'package:first_app/constants/routes.dart' as routes;
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({super.key});
@@ -24,7 +26,6 @@ class LoginPage extends ConsumerWidget {
         TextEditingController(text: loginModel.password);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(loginTitle),
       ),
       body: Column(
@@ -34,7 +35,6 @@ class LoginPage extends ConsumerWidget {
             keybordType: TextInputType.emailAddress,
             onChanged: (text) => loginModel.email = text,
             controller: emailEditiongController,
-            color: Colors.white,
             borderColor: Colors.black,
             shadowColor: Colors.red,
             hintText: mailAddressText,
@@ -44,7 +44,6 @@ class LoginPage extends ConsumerWidget {
               passwordEditingController: passwordEditingController,
               obsucreText: loginModel.isObsucure,
               toggleObscureText: () => loginModel.toggelIsObsucure(),
-              color: Colors.white,
               borderColor: Colors.black,
               shadowColor: Colors.red),
           RoundedButton(
@@ -53,7 +52,10 @@ class LoginPage extends ConsumerWidget {
             color: Colors.purple,
             textColor: Colors.white,
             text: loginText,
-          )
+          ),
+          TextButton(
+              onPressed: () => routes.toSignupPage(context: context),
+              child: const Text(noAccountMsg))
         ],
       ),
     );

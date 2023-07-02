@@ -1,16 +1,19 @@
 // flutter
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+// constans
 import 'package:first_app/constants/strings.dart';
+import 'package:first_app/constants/others.dart';
+// domain
 import 'package:first_app/domain/firestore_user/firestore_user.dart';
 import 'package:first_app/domain/following_token/following_token.dart';
+// model
 import 'package:first_app/models/main_model.dart';
-import 'package:flutter/material.dart';
+// packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
-// constans
-import 'package:first_app/constants/others.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final profileProvider = ChangeNotifierProvider((ref) => ProfileModel());
@@ -72,14 +75,15 @@ class ProfileModel extends ChangeNotifier {
     mainModel.followingUids.remove(passiveFirestoreUser.uid);
     final FirestoreUser activeUser = mainModel.firestoreUser;
     // followしているTokenを取得する。qshotというdataの塊を取得
-    final qshot = await FirebaseFirestore.instance
+    final QuerySnapshot<Map<String, dynamic>> qshot = await FirebaseFirestore
+        .instance
         .collection('users')
         .doc(activeUser.uid)
         .collection('tokens')
         .where('passiveUid', isEqualTo: passiveFirestoreUser.uid)
         .get();
     // 1個しか取得していないけど、Listで複数取得
-    final docs = qshot.docs as List<DocumentSnapshot<Map<String, dynamic>>>;
+    final List<DocumentSnapshot<Map<String, dynamic>>> docs = qshot.docs;
     final DocumentSnapshot<Map<String, dynamic>> token = docs.first;
     // await FirebaseFirestore.instance.collection('users').doc(activeUser.uid).collection('tokens').doc(tokenId).delete();
     await token.reference.delete();

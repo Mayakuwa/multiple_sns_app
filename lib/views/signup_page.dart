@@ -23,7 +23,6 @@ class SignupPage extends ConsumerWidget {
         TextEditingController(text: signupModel.password);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(singupTitle),
       ),
       body: Column(
@@ -33,7 +32,6 @@ class SignupPage extends ConsumerWidget {
             keybordType: TextInputType.emailAddress,
             onChanged: (text) => signupModel.email = text,
             controller: emailEditiongController,
-            color: Colors.white,
             borderColor: Colors.black,
             shadowColor: Colors.purple,
             hintText: mailAddressText,
@@ -43,7 +41,6 @@ class SignupPage extends ConsumerWidget {
               passwordEditingController: passwordEditingController,
               obsucreText: signupModel.isObsucure,
               toggleObscureText: () => signupModel.toggelIsObsucure(),
-              color: Colors.white,
               borderColor: Colors.black,
               shadowColor: Colors.purple),
           RoundedButton(

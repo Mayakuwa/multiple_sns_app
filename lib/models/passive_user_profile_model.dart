@@ -21,20 +21,32 @@ class PassiveUserProfileModel extends ChangeNotifier {
       {required MainModel mainModel,
       required FirestoreUser passiveUser}) async {
     mainModel.followingUids.add(passiveUser.uid);
-    notifyListeners();
-    final Timestamp now = Timestamp.now();
-    // 自分がフォローした印
     final String tokenId = returnUuidV4();
+    final Timestamp now = Timestamp.now();
     final FollowingToken followingToken = FollowingToken(
         passiveUid: passiveUser.uid, createdAt: now, tokenId: tokenId);
     // 現在のユーザ
     final FirestoreUser activeUser = mainModel.firestoreUser;
+    final newActiveUser =
+        activeUser.copyWith(followingCount: activeUser.followerCount + 1);
+    // フロント側で先に描画させるためにここで処理させる
+    mainModel.firestoreUser = newActiveUser;
+    // 自分がフォローした印
+    notifyListeners();
     await FirebaseFirestore.instance
         .collection('users')
         .doc(activeUser.uid)
         .collection('tokens')
         .doc(tokenId)
         .set(followingToken.toJson());
+    // 危険な例、フォローしているユーザーの数をプラス１している
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(activeUser.uid)
+        .update({
+      // Firebase上の値にプラス1。フロントエンドがDBに関わってこない更新になるので安全になる
+      'followingCount': FieldValue.increment(1)
+    });
     // 受動的なユーザ(フォローされたユーザ)がフォローされたdataを生成する
     final Follower follower = Follower(
         followedUid: passiveUser.uid,
@@ -46,14 +58,27 @@ class PassiveUserProfileModel extends ChangeNotifier {
         .collection('followers')
         .doc(activeUser.uid)
         .set(follower.toJson());
+    // フォローワーの数をプラス1している
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(passiveUser.uid)
+        .update({
+      // Firebase上の値にプラス1。フロントエンドがDBに関わってこない更新になるので安全になる
+      'followerCount': FieldValue.increment(1)
+    });
   }
 
   Future<void> unfollow(
       {required MainModel mainModel,
       required FirestoreUser passiveUser}) async {
     mainModel.followingUids.remove(passiveUser.uid);
-    notifyListeners();
+    // 現在のユーザ
     final FirestoreUser activeUser = mainModel.firestoreUser;
+    final newActiveUser =
+        activeUser.copyWith(followingCount: activeUser.followerCount - 1);
+    // フロント側で先に描画させるためにここで処理させる
+    mainModel.firestoreUser = newActiveUser;
+    notifyListeners();
     // followしているTokenを取得する。qshotというdataの塊を取得
     final QuerySnapshot<Map<String, dynamic>> qshot = await FirebaseFirestore
         .instance
@@ -67,6 +92,14 @@ class PassiveUserProfileModel extends ChangeNotifier {
     final DocumentSnapshot<Map<String, dynamic>> token = docs.first;
     // await FirebaseFirestore.instance.collection('users').doc(activeUser.uid).collection('tokens').doc(tokenId).delete();
     await token.reference.delete();
+    // 危険な例、フォローしているユーザーの数をマイナス１している
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(activeUser.uid)
+        .update({
+      // Firebase上の値にマイナス1。フロントエンドがDBに関わってこない更新になるので安全になる
+      'followingCount': FieldValue.increment(-1)
+    });
     // 受動的なユーザ(フォローされたユーザ)がフォローされたdataを生成する
     await FirebaseFirestore.instance
         .collection('users')
@@ -74,5 +107,13 @@ class PassiveUserProfileModel extends ChangeNotifier {
         .collection('followers')
         .doc(activeUser.uid)
         .delete();
+    // フォローワーの数をマイナス1している
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(passiveUser.uid)
+        .update({
+      // Firebase上の値にマイナス1。フロントエンドがDBに関わってこない更新になるので安全になる
+      'followerCount': FieldValue.increment(-1)
+    });
   }
 }

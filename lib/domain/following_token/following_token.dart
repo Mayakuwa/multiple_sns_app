@@ -9,12 +9,11 @@ part 'following_token.g.dart';
 @freezed
 abstract class FollowingToken with _$FollowingToken {
   // DBに保存する
-  // createAtやIdが必要
-  const factory FollowingToken({
-    required String passiveUid,
-    required dynamic createdAt,
-    required String tokenId
-  }) = _FollowingToken;
+  // 自分がフォローしたユーザのtoken
+  const factory FollowingToken(
+      {required String passiveUid,
+      required dynamic createdAt,
+      required String tokenId}) = _FollowingToken;
   factory FollowingToken.fromJson(Map<String, dynamic> json) =>
       _$FollowingTokenFromJson(json);
 }

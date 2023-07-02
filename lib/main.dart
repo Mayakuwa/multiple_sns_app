@@ -86,7 +86,7 @@ class MyHomePage extends ConsumerWidget {
                   snsBottomNavigationBarModel.onPageChanged(index: index),
               children: [
                 HomeScreen(),
-                SearchScreen(),
+                SearchScreen(mainModel: mainModel),
                 ProfileScreen(mainModel: mainModel)
               ],
             ),

@@ -53,7 +53,7 @@ class ProfileScreen extends ConsumerWidget {
       isFollowing
           ? RoundedButton(
               onPressed: () => profileModel.unfollow(
-                  mainMode: mainModel, passiveFirestoreUser: firestoreUser),
+                  mainModel: mainModel, passiveFirestoreUser: firestoreUser),
               withRate: 0.85,
               color: Colors.purple,
               textColor: Colors.white,

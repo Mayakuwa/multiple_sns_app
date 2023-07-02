@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/constants/strings.dart';
 import 'package:first_app/domain/firestore_user/firestore_user.dart';
+import 'package:first_app/domain/following_token/following_token.dart';
 import 'package:first_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,17 +45,44 @@ class ProfileModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void follow(
+  Future<void> follow(
       {required MainModel mainModel,
-      required FirestoreUser passiveFirestoreUser}) {
+      required FirestoreUser passiveFirestoreUser}) async {
     mainModel.followingUids.add(passiveFirestoreUser.uid);
+    final String tokenId = returnUuidV4();
+    // フォローした情報
+    final FollowingToken followingToken = FollowingToken(
+        passiveUid: passiveFirestoreUser.uid,
+        createdAt: Timestamp.now(),
+        tokenId: tokenId);
+    // 現在のユーザ
+    final FirestoreUser activeUser = mainModel.firestoreUser;
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(activeUser.uid)
+        .collection('tokens')
+        .doc(tokenId)
+        .set(followingToken.toJson());
     notifyListeners();
   }
 
-  void unfollow(
-      {required MainModel mainMode,
-      required FirestoreUser passiveFirestoreUser}) {
-    mainMode.followingUids.remove(passiveFirestoreUser.uid);
+  Future<void> unfollow(
+      {required MainModel mainModel,
+      required FirestoreUser passiveFirestoreUser}) async {
+    mainModel.followingUids.remove(passiveFirestoreUser.uid);
+    final FirestoreUser activeUser = mainModel.firestoreUser;
+    // followしているTokenを取得する。qshotというdataの塊を取得
+    final qshot = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(activeUser.uid)
+        .collection('tokens')
+        .where('passiveUid', isEqualTo: passiveFirestoreUser.uid)
+        .get();
+    // 1個しか取得していないけど、Listで複数取得
+    final docs = qshot.docs as List<DocumentSnapshot<Map<String, dynamic>>>;
+    final DocumentSnapshot<Map<String, dynamic>> token = docs.first;
+    // await FirebaseFirestore.instance.collection('users').doc(activeUser.uid).collection('tokens').doc(tokenId).delete();
+    await token.reference.delete();
     notifyListeners();
   }
 }

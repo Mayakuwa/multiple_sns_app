@@ -39,14 +39,6 @@ class PassiveUserProfileModel extends ChangeNotifier {
         .collection('tokens')
         .doc(tokenId)
         .set(followingToken.toJson());
-    // 危険な例、フォローしているユーザーの数をプラス１している
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(activeUser.uid)
-        .update({
-      // Firebase上の値にプラス1。フロントエンドがDBに関わってこない更新になるので安全になる
-      'followingCount': FieldValue.increment(1)
-    });
     // 受動的なユーザ(フォローされたユーザ)がフォローされたdataを生成する
     final Follower follower = Follower(
         followedUid: passiveUser.uid,
@@ -58,14 +50,6 @@ class PassiveUserProfileModel extends ChangeNotifier {
         .collection('followers')
         .doc(activeUser.uid)
         .set(follower.toJson());
-    // フォローワーの数をプラス1している
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(passiveUser.uid)
-        .update({
-      // Firebase上の値にプラス1。フロントエンドがDBに関わってこない更新になるので安全になる
-      'followerCount': FieldValue.increment(1)
-    });
   }
 
   Future<void> unfollow(
@@ -92,28 +76,12 @@ class PassiveUserProfileModel extends ChangeNotifier {
     final DocumentSnapshot<Map<String, dynamic>> token = docs.first;
     // await FirebaseFirestore.instance.collection('users').doc(activeUser.uid).collection('tokens').doc(tokenId).delete();
     await token.reference.delete();
-    // 危険な例、フォローしているユーザーの数をマイナス１している
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(activeUser.uid)
-        .update({
-      // Firebase上の値にマイナス1。フロントエンドがDBに関わってこない更新になるので安全になる
-      'followingCount': FieldValue.increment(-1)
-    });
-    // 受動的なユーザ(フォローされたユーザ)がフォローされたdataを生成する
+    // 受動的なユーザ(フォローされたユーザ)がフォローされたdataを削除する
     await FirebaseFirestore.instance
         .collection('users')
         .doc(passiveUser.uid)
         .collection('followers')
         .doc(activeUser.uid)
         .delete();
-    // フォローワーの数をマイナス1している
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(passiveUser.uid)
-        .update({
-      // Firebase上の値にマイナス1。フロントエンドがDBに関わってこない更新になるので安全になる
-      'followerCount': FieldValue.increment(-1)
-    });
   }
 }

@@ -75,6 +75,10 @@ class MyHomePage extends ConsumerWidget {
       appBar: AppBar(
         title: Text(title),
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.new_label),
+        onPressed: () =>{}
+      ),
       drawer: SnsDrawer(mainModel: mainModel, themeModel: themeModel),
       body: mainModel.isLoading
           ? Center(

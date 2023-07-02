@@ -118,7 +118,9 @@ class __$$_FollowingTokenCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_FollowingToken implements _FollowingToken {
+class _$_FollowingToken
+    with DiagnosticableTreeMixin
+    implements _FollowingToken {
   const _$_FollowingToken(
       {required this.passiveUid,
       required this.createdAt,
@@ -135,8 +137,18 @@ class _$_FollowingToken implements _FollowingToken {
   final String tokenId;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'FollowingToken(passiveUid: $passiveUid, createdAt: $createdAt, tokenId: $tokenId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'FollowingToken'))
+      ..add(DiagnosticsProperty('passiveUid', passiveUid))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('tokenId', tokenId));
   }
 
   @override

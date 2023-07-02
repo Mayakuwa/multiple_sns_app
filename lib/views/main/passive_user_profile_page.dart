@@ -55,8 +55,7 @@ class PassiveUserProfilePage extends ConsumerWidget {
             isFollowing
                 ? RoundedButton(
                     onPressed: () => passiveUserProfileModel.unfollow(
-                        mainModel: mainModel,
-                        passiveFirestoreUser: passiveUser),
+                        mainModel: mainModel, passiveUser: passiveUser),
                     withRate: 0.85,
                     color: Colors.purple,
                     textColor: Colors.white,

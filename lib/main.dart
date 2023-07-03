@@ -1,5 +1,6 @@
 // flutter
 import 'package:first_app/constants/themes.dart';
+// flutter
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +10,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:first_app/models/main_model.dart';
 import 'package:first_app/models/themes_model.dart';
 import 'package:first_app/models/sns_bottom_navigation_bar_model.dart';
+import 'package:first_app/models/create_post_model.dart';
 // options
 import 'firebase_options.dart';
 // contains
@@ -70,15 +72,16 @@ class MyHomePage extends ConsumerWidget {
     final MainModel mainModel = ref.watch(mainProvider);
     final SnsBottomNavigationBarModel snsBottomNavigationBarModel =
         ref.watch(snsBottomNavigationBarProvider);
+    final CreatePostModel createPostModel = ref.watch(createPostProvider);
+
     // mainProviderを監視する&呼び出す。
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.new_label),
-        onPressed: () =>{}
-      ),
+          child: Icon(Icons.new_label),
+          onPressed: () => createPostModel.showPostDialog(context: context)),
       drawer: SnsDrawer(mainModel: mainModel, themeModel: themeModel),
       body: mainModel.isLoading
           ? Center(

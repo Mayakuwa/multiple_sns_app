@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/material.dart';
 
 part 'follower.freezed.dart';
 part 'follower.g.dart';

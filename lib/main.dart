@@ -13,11 +13,8 @@ import 'package:first_app/models/sns_bottom_navigation_bar_model.dart';
 import 'package:first_app/models/create_post_model.dart';
 // options
 import 'firebase_options.dart';
-// contains
-import 'package:first_app/constants/routes.dart' as routes;
 // components
 import 'package:first_app/details/sns_bottom_navigation_bar.dart';
-import 'package:first_app/details/rounded_button.dart';
 import 'package:first_app/details/sns_drawer.dart';
 // views
 import 'package:first_app/views/main/home_screen.dart';
@@ -81,7 +78,8 @@ class MyHomePage extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.new_label),
-          onPressed: () => createPostModel.showPostDialog(context: context)),
+          onPressed: () => createPostModel.showPostFlashBar(
+              context: context, mainModel: mainModel)),
       drawer: SnsDrawer(mainModel: mainModel, themeModel: themeModel),
       body: mainModel.isLoading
           ? Center(

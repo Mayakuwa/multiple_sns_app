@@ -1,5 +1,4 @@
 // flutter
-import 'package:first_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 // packages
 // widgetをグローバルに管理してくれるパッケージだよ

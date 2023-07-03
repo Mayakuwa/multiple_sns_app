@@ -1,17 +1,24 @@
 // flutter
-import 'package:first_app/constants/strings.dart';
+import 'package:first_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flash/flash.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+// components
+import 'package:first_app/constants/strings.dart';
+// domain
+import 'package:first_app/domain/post/post.dart';
+import 'package:first_app/domain/firestore_user/firestore_user.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final createPostProvider = ChangeNotifierProvider((ref) => CreatePostModel());
 
 class CreatePostModel extends ChangeNotifier {
   final TextEditingController textEditingController = TextEditingController();
-  String text = '';
-  void showPostDialog({required BuildContext context}) {
+  String text = "";
+  void showPostFlashBar(
+      {required BuildContext context, required MainModel mainModel}) {
     context.showFlashBar(
       persistent: true,
       content: Form(
@@ -29,9 +36,10 @@ class CreatePostModel extends ChangeNotifier {
           onTap: () async {
             if (textEditingController.text.isNotEmpty) {
               // メインの動作
-              controller.dismiss();
+              await createPost(currentUserDoc: mainModel.currentUserDoc);
+              await controller.dismiss();
+              text = "";
             } else {
-              // 何もしない
               await controller.dismiss();
             }
           },
@@ -45,5 +53,26 @@ class CreatePostModel extends ChangeNotifier {
         );
       },
     );
+  }
+
+  Future<void> createPost(
+      {required DocumentSnapshot<Map<String, dynamic>> currentUserDoc}) async {
+    final Timestamp now = Timestamp.now();
+    final String activeUid = currentUserDoc.id;
+    final String postId = returnUuidV4();
+    final Post post = Post(
+        postId: postId,
+        likeCount: 0,
+        text: text,
+        uid: activeUid,
+        imageURL: '',
+        hashTags: [],
+        createdAt: now,
+        updatedAt: now);
+    // currentUserDoc.referenceでFirebaseFirestore.instance.collection('users').doc(firestoreUser.uid)と同じ意味
+    await currentUserDoc.reference
+        .collection('posts')
+        .doc(postId)
+        .set(post.toJson());
   }
 }

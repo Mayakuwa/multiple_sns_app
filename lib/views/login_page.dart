@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // models
 import 'package:first_app/models/login_model.dart';
-import 'package:first_app/models/main_model.dart';
 // components
 import 'package:first_app/details/rounded_text_field.dart';
 import 'package:first_app/details/rounded_password_field.dart';

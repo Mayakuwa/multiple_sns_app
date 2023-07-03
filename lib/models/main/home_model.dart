@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final homeProvider = ChangeNotifierProvider((ref) => HomeModel());
@@ -12,8 +13,17 @@ final homeProvider = ChangeNotifierProvider((ref) => HomeModel());
 class HomeModel extends ChangeNotifier {
   bool isLoading = false;
   late User? currentUser;
-
+  final RefreshController refreshController = RefreshController();
   List<DocumentSnapshot<Map<String, dynamic>>> postDocs = [];
+  Query<Map<String, dynamic>> returnQuery() {
+    final User? currentUser = returnAuthUser();
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentUser!.uid)
+        .collection('posts')
+        .orderBy('createdAt', descending: true)
+        .limit(30);
+  }
 
   HomeModel() {
     init();
@@ -21,14 +31,8 @@ class HomeModel extends ChangeNotifier {
 
   Future<void> init() async {
     startLoading();
-    final User? currentUser = returnAuthUser();
-    final qshot = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser!.uid)
-        .collection('posts')
-        .orderBy('createdAt', descending: true)
-        .limit(30)
-        .get();
+    final query = returnQuery();
+    final qshot = await query.get();
     postDocs = qshot.docs;
     endLoading();
   }
@@ -40,6 +44,40 @@ class HomeModel extends ChangeNotifier {
 
   void endLoading() {
     isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> onRefresh() async {
+    refreshController.refreshCompleted();
+    if (postDocs.isNotEmpty) {
+      // 新しいものが出てきた場合は新しいものを取得
+      final qshot = await returnQuery().endBeforeDocument(postDocs.first).get();
+      // qshotの並び順を反対にする
+      final reversed = qshot.docs.reversed.toList();
+      for (final postDoc in reversed) {
+        // リストの先頭に詰める
+        postDocs.insert(0, postDoc);
+      }
+    }
+    notifyListeners();
+  }
+
+  Future<void> onReload() async {
+    startLoading();
+    final qshot = await returnQuery().get();
+    postDocs = qshot.docs;
+    endLoading();
+  }
+
+  Future<void> onLoading() async {
+    refreshController.loadComplete();
+    if (postDocs.isNotEmpty) {
+      final qshot = await returnQuery().startAfterDocument(postDocs.last).get();
+      for (final postDoc in qshot.docs) {
+        // 追加して配列に詰める
+        postDocs.add(postDoc);
+      }
+    }
     notifyListeners();
   }
 }

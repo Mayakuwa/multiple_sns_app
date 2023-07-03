@@ -24,6 +24,7 @@ const String logoutText = 'ログアウトする';
 const String loadingText = 'Loading';
 const String uploadText = 'アップロードする';
 const String createPostText = '投稿を作成する';
+const String reloadText = '再読み込みを行う';
 // name
 const String aliceName = 'Alice';
 // fieldkey

@@ -6,16 +6,16 @@ service cloud.firestore {
       // 認証されたユーザのみ閲覧できる
       allow read: if isAuthenticated();
       // 本人しか作成できない。消せない。
-      allow create, delete: if isTheSameUser(uid)
+      allow create, delete: if isTheSameUserOrAdmin(uid);
       match /tokens/{tokenId} {
-        allow read, create, delete: if isTheSameUser(uid);
+        allow read, create, delete: if isTheSameUserOrAdmin(uid);
       }
       match /followers/{followerUid} {
-        allow create, delete: if isTheSameUser(followerUid);
+        allow create, delete: if isTheSameUserOrAdmin(followerUid);
       }
       match /posts/{postId} {
         allow read: if isAuthenticated();
-        allow create, delete: if isTheSameUser(uid);
+        allow create, delete: if isTheSameUserOrAdmin(uid);
       }
     }
   }
@@ -24,7 +24,11 @@ service cloud.firestore {
     }
 
   // 同じuidのみ削除できる
-  function isTheSameUser(uid) {
-    return request.auth.uid == uid;
+  function isTheSameUserOrAdmin(uid) {
+    return request.auth.uid == uid || isAdmin();
+  }
+
+  function isAdmin() {
+    return request.auth.uid == "MC9Kuv8Pt4NU2siADhsPlr6miBI2";
   }
 }

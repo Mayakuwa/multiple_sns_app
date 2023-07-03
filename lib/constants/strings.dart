@@ -10,6 +10,7 @@ const String cropperTitle = 'Cropper';
 const String accountTitle = 'アカウント';
 const String themeTitle = 'テーマ';
 const String profileTitle = 'プロフィール';
+const String adminTitle = '管理者';
 // BottomNavigationBar
 const String homeText = 'Home';
 const String searchText = 'Search';

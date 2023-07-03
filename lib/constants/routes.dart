@@ -1,5 +1,6 @@
 // flutter
 import 'package:first_app/domain/firestore_user/firestore_user.dart';
+import 'package:first_app/views/admin_page.dart';
 import 'package:flutter/material.dart';
 // pages
 import 'package:first_app/views/signup_page.dart';
@@ -35,3 +36,6 @@ void toPassiveUserProfilePage(
         MaterialPageRoute(
             builder: (context) => PassiveUserProfilePage(
                 passiveUser: passiveUser, mainModel: mainModel)));
+
+void toAdminPage({required BuildContext context}) => Navigator.push(
+    context, MaterialPageRoute(builder: (context) => AdminPage()));

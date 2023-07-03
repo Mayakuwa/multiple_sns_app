@@ -1,10 +1,12 @@
 // flutter
-import 'package:first_app/constants/strings.dart';
 import 'package:flutter/material.dart';
 // package
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// constats
+import 'package:first_app/constants/strings.dart';
 
 Future<XFile> returnXFile() async {
   final ImagePicker picker = ImagePicker();
@@ -29,3 +31,5 @@ Future<File?> returnCroppedFile({required XFile? xFile}) async {
       ));
   return result;
 }
+
+User? returnAuthUser() => FirebaseAuth.instance.currentUser;

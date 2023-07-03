@@ -17,7 +17,7 @@ final mainProvider = ChangeNotifierProvider((ref) => MainModel());
 class MainModel extends ChangeNotifier {
   bool isLoading = false;
   int counter = 1;
-  User? currentUser = null;
+  late User? currentUser;
   // lateで後で定める
   late DocumentSnapshot<Map<String, dynamic>> currentUserDoc;
   late FirestoreUser firestoreUser;

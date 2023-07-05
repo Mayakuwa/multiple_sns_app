@@ -11,7 +11,8 @@ abstract class FollowingToken with _$FollowingToken {
   const factory FollowingToken(
       {required String passiveUid,
       required dynamic createdAt,
-      required String tokenId}) = _FollowingToken;
+      required String tokenId,
+      required String tokenType}) = _FollowingToken;
   factory FollowingToken.fromJson(Map<String, dynamic> json) =>
       _$FollowingTokenFromJson(json);
 }

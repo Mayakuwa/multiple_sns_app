@@ -45,10 +45,24 @@ exports.onFollowerDelete = functions.firestore.
     );
 
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+exports.onPostLikeCreate = functions.firestore.
+    document("users/{uid}/posts/{postId}/postLikes/{activeUid}").onCreate(
+        async (snap, _) => {
+          const newValue = snap.data();
+          await newValue.postRef.update({
+            "likeCount": admin.firestore.FieldValue.increment(plusOne),
+          });
+        },
+    );
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+exports.onPostLikeDelete = functions.firestore.
+    document("users/{uid}/posts/{postId}/postLikes/{activeUid}").onDelete(
+        async (snap, _) => {
+          const newValue = snap.data();
+          await newValue.postRef.update({
+            "likeCount": admin.firestore.FieldValue.increment(minusOne),
+          });
+        },
+    );
+
+

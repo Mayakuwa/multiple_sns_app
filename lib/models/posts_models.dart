@@ -36,7 +36,8 @@ class PostsModel extends ChangeNotifier {
         createdAt: now,
         postRef: postRef,
         postId: postId,
-        tokenId: tokenId);
+        tokenId: tokenId,
+        tokenType: 'likePost');
     await currentUserDoc.reference
         .collection('tokens')
         .doc(tokenId)

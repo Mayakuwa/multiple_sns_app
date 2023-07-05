@@ -26,6 +26,7 @@ mixin _$LikePostToken {
   dynamic get postRef => throw _privateConstructorUsedError;
   String get postId => throw _privateConstructorUsedError;
   String get tokenId => throw _privateConstructorUsedError;
+  String get tokenType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +46,8 @@ abstract class $LikePostTokenCopyWith<$Res> {
       dynamic createdAt,
       dynamic postRef,
       String postId,
-      String tokenId});
+      String tokenId,
+      String tokenType});
 }
 
 /// @nodoc
@@ -67,6 +69,7 @@ class _$LikePostTokenCopyWithImpl<$Res, $Val extends LikePostToken>
     Object? postRef = freezed,
     Object? postId = null,
     Object? tokenId = null,
+    Object? tokenType = null,
   }) {
     return _then(_value.copyWith(
       activeUid: null == activeUid
@@ -93,6 +96,10 @@ class _$LikePostTokenCopyWithImpl<$Res, $Val extends LikePostToken>
           ? _value.tokenId
           : tokenId // ignore: cast_nullable_to_non_nullable
               as String,
+      tokenType: null == tokenType
+          ? _value.tokenType
+          : tokenType // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -111,7 +118,8 @@ abstract class _$$_LikePostTokenCopyWith<$Res>
       dynamic createdAt,
       dynamic postRef,
       String postId,
-      String tokenId});
+      String tokenId,
+      String tokenType});
 }
 
 /// @nodoc
@@ -131,6 +139,7 @@ class __$$_LikePostTokenCopyWithImpl<$Res>
     Object? postRef = freezed,
     Object? postId = null,
     Object? tokenId = null,
+    Object? tokenType = null,
   }) {
     return _then(_$_LikePostToken(
       activeUid: null == activeUid
@@ -157,6 +166,10 @@ class __$$_LikePostTokenCopyWithImpl<$Res>
           ? _value.tokenId
           : tokenId // ignore: cast_nullable_to_non_nullable
               as String,
+      tokenType: null == tokenType
+          ? _value.tokenType
+          : tokenType // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -170,7 +183,8 @@ class _$_LikePostToken with DiagnosticableTreeMixin implements _LikePostToken {
       required this.createdAt,
       required this.postRef,
       required this.postId,
-      required this.tokenId});
+      required this.tokenId,
+      required this.tokenType});
 
   factory _$_LikePostToken.fromJson(Map<String, dynamic> json) =>
       _$$_LikePostTokenFromJson(json);
@@ -187,10 +201,12 @@ class _$_LikePostToken with DiagnosticableTreeMixin implements _LikePostToken {
   final String postId;
   @override
   final String tokenId;
+  @override
+  final String tokenType;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LikePostToken(activeUid: $activeUid, passiveUid: $passiveUid, createdAt: $createdAt, postRef: $postRef, postId: $postId, tokenId: $tokenId)';
+    return 'LikePostToken(activeUid: $activeUid, passiveUid: $passiveUid, createdAt: $createdAt, postRef: $postRef, postId: $postId, tokenId: $tokenId, tokenType: $tokenType)';
   }
 
   @override
@@ -203,7 +219,8 @@ class _$_LikePostToken with DiagnosticableTreeMixin implements _LikePostToken {
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('postRef', postRef))
       ..add(DiagnosticsProperty('postId', postId))
-      ..add(DiagnosticsProperty('tokenId', tokenId));
+      ..add(DiagnosticsProperty('tokenId', tokenId))
+      ..add(DiagnosticsProperty('tokenType', tokenType));
   }
 
   @override
@@ -218,7 +235,9 @@ class _$_LikePostToken with DiagnosticableTreeMixin implements _LikePostToken {
             const DeepCollectionEquality().equals(other.createdAt, createdAt) &&
             const DeepCollectionEquality().equals(other.postRef, postRef) &&
             (identical(other.postId, postId) || other.postId == postId) &&
-            (identical(other.tokenId, tokenId) || other.tokenId == tokenId));
+            (identical(other.tokenId, tokenId) || other.tokenId == tokenId) &&
+            (identical(other.tokenType, tokenType) ||
+                other.tokenType == tokenType));
   }
 
   @JsonKey(ignore: true)
@@ -230,7 +249,8 @@ class _$_LikePostToken with DiagnosticableTreeMixin implements _LikePostToken {
       const DeepCollectionEquality().hash(createdAt),
       const DeepCollectionEquality().hash(postRef),
       postId,
-      tokenId);
+      tokenId,
+      tokenType);
 
   @JsonKey(ignore: true)
   @override
@@ -253,7 +273,8 @@ abstract class _LikePostToken implements LikePostToken {
       required final dynamic createdAt,
       required final dynamic postRef,
       required final String postId,
-      required final String tokenId}) = _$_LikePostToken;
+      required final String tokenId,
+      required final String tokenType}) = _$_LikePostToken;
 
   factory _LikePostToken.fromJson(Map<String, dynamic> json) =
       _$_LikePostToken.fromJson;
@@ -270,6 +291,8 @@ abstract class _LikePostToken implements LikePostToken {
   String get postId;
   @override
   String get tokenId;
+  @override
+  String get tokenType;
   @override
   @JsonKey(ignore: true)
   _$$_LikePostTokenCopyWith<_$_LikePostToken> get copyWith =>

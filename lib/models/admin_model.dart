@@ -2,13 +2,6 @@
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-// constants
-import 'package:first_app/constants/others.dart';
-import 'package:first_app/constants/strings.dart';
-// domain
-import 'package:first_app/domain/post/post.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final adminProvider = ChangeNotifierProvider((ref) => AdminModel());

@@ -29,6 +29,10 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ),
       Text(
+        firestoreUser.uid,
+        style: TextStyle(fontSize: 32.0),
+      ),
+      Text(
         'フォロー中' + firestoreUser.followingCount.toString(),
         style: TextStyle(fontSize: 32.0),
       ),

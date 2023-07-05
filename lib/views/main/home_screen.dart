@@ -1,5 +1,7 @@
 // flutter
 import 'package:first_app/details/rounded_button.dart';
+import 'package:first_app/details/user_image.dart';
+import 'package:first_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 // models
 import 'package:first_app/models/main/home_model.dart';
@@ -12,7 +14,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:first_app/domain/post/post.dart';
 
 class HomeScreen extends ConsumerWidget {
-  HomeScreen({Key? key});
+  HomeScreen({Key? key, required this.mainModel});
+  final MainModel mainModel;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final HomeModel homeModel = ref.watch(homeProvider);
@@ -47,6 +50,16 @@ class HomeScreen extends ConsumerWidget {
                             final doc = postDocs[index];
                             final Post post = Post.fromJson(doc.data()!);
                             return ListTile(
+                              trailing: InkWell(
+                                child: Icon(Icons.favorite),
+                              ),
+                              leading: UserImage(
+                                lenght: 32,
+                                userImageURL:
+                                    post.uid == mainModel.firestoreUser.uid
+                                        ? mainModel.firestoreUser.userImageURL
+                                        : post.imageURL,
+                              ),
                               title: Text(post.text),
                             );
                           })))

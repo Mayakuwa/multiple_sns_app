@@ -9,7 +9,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/constants/strings.dart';
 // domain
 import 'package:first_app/domain/post/post.dart';
-import 'package:first_app/domain/firestore_user/firestore_user.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final createPostProvider = ChangeNotifierProvider((ref) => CreatePostModel());

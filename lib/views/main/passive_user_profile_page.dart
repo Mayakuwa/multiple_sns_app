@@ -12,7 +12,6 @@ import 'package:first_app/details/user_image.dart';
 // models
 // models
 import 'package:first_app/models/main_model.dart';
-import 'package:first_app/models/main/profile_model.dart';
 
 class PassiveUserProfilePage extends ConsumerWidget {
   const PassiveUserProfilePage(

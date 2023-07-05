@@ -38,6 +38,7 @@ class ProfileModel extends ChangeNotifier {
     final uid = currentUserDoc.id;
     croppedFile = await returnCroppedFile(xFile: xFile);
     final String url = await uploadImageAndGetURL(uid: uid, file: file);
+    print(url);
     // 現在ログイン中のユーザのリファレンスを取得
     await currentUserDoc.reference.update({'userImageURL': url});
     notifyListeners();

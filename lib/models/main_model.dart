@@ -24,6 +24,7 @@ class MainModel extends ChangeNotifier {
 
   // tokens
   List<String> followingUids = [];
+  List<String> likePostIds = [];
 
   MainModel() {
     init();

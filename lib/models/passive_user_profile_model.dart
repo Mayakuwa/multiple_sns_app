@@ -20,6 +20,8 @@ class PassiveUserProfileModel extends ChangeNotifier {
   Future<void> follow(
       {required MainModel mainModel,
       required FirestoreUser passiveUser}) async {
+    // settings
+    // フォローした人をリストに加えている
     mainModel.followingUids.add(passiveUser.uid);
     final String tokenId = returnUuidV4();
     final Timestamp now = Timestamp.now();

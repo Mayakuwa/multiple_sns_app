@@ -8,8 +8,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // constans
 import 'package:first_app/constants/routes.dart' as routes;
 import 'package:first_app/constants/strings.dart';
+import 'package:first_app/constants/enums.dart';
 // domain
 import 'package:first_app/domain/firestore_user/firestore_user.dart';
+import 'package:first_app/domain/following_token/following_token.dart';
+import 'package:first_app/domain/like_post_token/like_post_token.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final mainProvider = ChangeNotifierProvider((ref) => MainModel());
@@ -23,7 +26,9 @@ class MainModel extends ChangeNotifier {
   late FirestoreUser firestoreUser;
 
   // tokens
+  List<FollowingToken> followingTokens = [];
   List<String> followingUids = [];
+  List<LikePostToken> likePostTokens = [];
   List<String> likePostIds = [];
 
   MainModel() {
@@ -40,6 +45,8 @@ class MainModel extends ChangeNotifier {
         .collection(usersFieldkey)
         .doc(currentUser!.uid)
         .get();
+    // tokenを分配する
+    await distributeTokens();
     firestoreUser = FirestoreUser.fromJson(currentUserDoc.data()!);
     // current Userのuidの取得が可能になりました
     endLoading();
@@ -48,6 +55,30 @@ class MainModel extends ChangeNotifier {
   void setCurrentUser() {
     currentUser = FirebaseAuth.instance.currentUser;
     notifyListeners();
+  }
+
+  Future<void> distributeTokens() async {
+    final tokensQshot =
+        await currentUserDoc.reference.collection('tokens').get();
+    final tokenDocs = tokensQshot.docs;
+    for (final token in tokenDocs) {
+      final Map<String, dynamic> tokenMap = token.data();
+      final TokenType tokenType = mapToTokenType(tokenMap: tokenMap);
+      switch (tokenType) {
+        case TokenType.following:
+          final FollowingToken followingToken =
+              FollowingToken.fromJson(tokenMap);
+          followingTokens.add(followingToken);
+          followingUids.add(followingToken.passiveUid);
+          break;
+        case TokenType.likePost:
+          final LikePostToken likePostToken = LikePostToken.fromJson(tokenMap);
+          likePostTokens.add(likePostToken);
+          // print(likePostToken);
+          likePostIds.add(likePostToken.postId);
+          break;
+      }
+    }
   }
 
   void startLoading() {

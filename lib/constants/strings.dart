@@ -11,6 +11,7 @@ const String accountTitle = 'アカウント';
 const String themeTitle = 'テーマ';
 const String profileTitle = 'プロフィール';
 const String adminTitle = '管理者';
+const String commentTitle = 'コメント';
 // BottomNavigationBar
 const String homeText = 'Home';
 const String searchText = 'Search';
@@ -23,8 +24,9 @@ const String loginText = 'ログインする';
 const String logoutText = 'ログアウトする';
 const String loadingText = 'Loading';
 const String uploadText = 'アップロードする';
-const String createPostText = '投稿を作成する';
+const String createPostTitle = '投稿を作成する';
 const String reloadText = '再読み込みを行う';
+const String createCommentText = 'コメントを作成する';
 // name
 const String aliceName = 'Alice';
 // fieldkey

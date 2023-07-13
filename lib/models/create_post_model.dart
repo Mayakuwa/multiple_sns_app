@@ -1,5 +1,4 @@
 // flutter
-import 'package:first_app/models/main_model.dart';
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +8,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/constants/strings.dart';
 // domain
 import 'package:first_app/domain/post/post.dart';
+// model
+import 'package:first_app/models/main_model.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final createPostProvider = ChangeNotifierProvider((ref) => CreatePostModel());
@@ -27,7 +28,7 @@ class CreatePostModel extends ChangeNotifier {
         onChanged: (value) => text = value,
         maxLines: 10,
       )),
-      title: Text(createPostText),
+      title: const Text(createPostTitle),
       // メインの動作
       primaryActionBuilder: (context, controller, _) {
         return InkWell(

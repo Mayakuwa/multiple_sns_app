@@ -1,5 +1,4 @@
 // flutter
-import 'package:first_app/details/post_like_button.dart';
 import 'package:flutter/material.dart';
 // models
 import 'package:first_app/models/main/home_model.dart';
@@ -15,6 +14,10 @@ import 'package:first_app/domain/post/post.dart';
 // components
 import 'package:first_app/details/user_image.dart';
 import 'package:first_app/details/rounded_button.dart';
+import 'package:first_app/details/post_like_button.dart';
+
+// routes
+import 'package:first_app/constants/routes.dart' as routes;
 
 class HomeScreen extends ConsumerWidget {
   HomeScreen({Key? key, required this.mainModel});
@@ -92,25 +95,16 @@ class HomeScreen extends ConsumerWidget {
                                               post: post,
                                               postsModel: postsModel,
                                               postDoc: postDoc),
-                                          Icon(Icons.comment)
+                                          InkWell(
+                                              child: Icon(Icons.comment),
+                                              onTap: () => routes.toCommentPage(
+                                                  context: context,
+                                                  post: post,
+                                                  postDoc: postDoc,
+                                                  mainModel: mainModel))
                                         ]),
                                   ],
                                 ));
-                            // ListTile(
-                            //   trailing: PostLiskeButton(
-                            //       mainModel: mainModel,
-                            //       post: post,
-                            //       postsModel: postsModel,
-                            //       postDoc: postDoc),
-                            //   leading: UserImage(
-                            //     lenght: 32,
-                            //     userImageURL:
-                            //         post.uid == mainModel.firestoreUser.uid
-                            //             ? mainModel.firestoreUser.userImageURL
-                            //             : post.imageURL,
-                            //   ),
-                            //   title: Text(post.text),
-                            // );
                           })))
             ],
           );

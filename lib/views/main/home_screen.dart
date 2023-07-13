@@ -1,4 +1,5 @@
 // flutter
+import 'package:first_app/details/post_like_button.dart';
 import 'package:flutter/material.dart';
 // models
 import 'package:first_app/models/main/home_model.dart';
@@ -52,35 +53,64 @@ class HomeScreen extends ConsumerWidget {
                           itemBuilder: (BuildContext context, int index) {
                             final postDoc = postDocs[index];
                             final Post post = Post.fromJson(postDoc.data()!);
-                            return ListTile(
-                              trailing: mainModel.likePostIds
-                                      .contains(post.postId)
-                                  ? InkWell(
-                                      child: const Icon(Icons.favorite,
-                                          color: Colors.red),
-                                      onTap: () async =>
-                                          await postsModel.unlike(
+                            return Container(
+                                margin: const EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.purple),
+                                    borderRadius: BorderRadius.circular(32.0)),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          UserImage(
+                                            lenght: 32.0,
+                                            userImageURL: post.uid ==
+                                                    mainModel.firestoreUser.uid
+                                                ? mainModel
+                                                    .firestoreUser.userImageURL
+                                                : post.imageURL,
+                                          ),
+                                          // PostLiskeButton(
+                                          //     mainModel: mainModel,
+                                          //     post: post,
+                                          //     postsModel: postsModel,
+                                          //     postDoc: postDoc)
+                                        ]),
+                                    Row(children: [
+                                      Text(post.text,
+                                          style: TextStyle(fontSize: 24))
+                                    ]),
+                                    Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          PostLiskeButton(
+                                              mainModel: mainModel,
                                               post: post,
-                                              postDoc: postDoc,
-                                              postRef: postDoc.reference,
-                                              mainModel: mainModel),
-                                    )
-                                  : InkWell(
-                                      child: const Icon(Icons.favorite),
-                                      onTap: () async => await postsModel.like(
-                                          post: post,
-                                          postDoc: postDoc,
-                                          postRef: postDoc.reference,
-                                          mainModel: mainModel)),
-                              leading: UserImage(
-                                lenght: 32,
-                                userImageURL:
-                                    post.uid == mainModel.firestoreUser.uid
-                                        ? mainModel.firestoreUser.userImageURL
-                                        : post.imageURL,
-                              ),
-                              title: Text(post.text),
-                            );
+                                              postsModel: postsModel,
+                                              postDoc: postDoc),
+                                          Icon(Icons.comment)
+                                        ]),
+                                  ],
+                                ));
+                            // ListTile(
+                            //   trailing: PostLiskeButton(
+                            //       mainModel: mainModel,
+                            //       post: post,
+                            //       postsModel: postsModel,
+                            //       postDoc: postDoc),
+                            //   leading: UserImage(
+                            //     lenght: 32,
+                            //     userImageURL:
+                            //         post.uid == mainModel.firestoreUser.uid
+                            //             ? mainModel.firestoreUser.userImageURL
+                            //             : post.imageURL,
+                            //   ),
+                            //   title: Text(post.text),
+                            // );
                           })))
             ],
           );

@@ -7,7 +7,6 @@ import 'package:flash/flash.dart';
 
 void showFlashBar(
     {required BuildContext context,
-    required MainModel mainModel,
     required TextEditingController textEditingController,
     required void Function(String)? onChanged,
     required String titleString,

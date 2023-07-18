@@ -1,5 +1,4 @@
 // flutter
-import 'package:first_app/models/comment_model.dart';
 import 'package:flutter/material.dart';
 // packages
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +10,7 @@ import 'package:first_app/constants/strings.dart';
 import 'package:first_app/models/main_model.dart';
 // domain
 import 'package:first_app/domain/post/post.dart';
+import 'package:first_app/models/comment_model.dart';
 
 class CommentPage extends ConsumerWidget {
   const CommentPage(
@@ -31,7 +31,7 @@ class CommentPage extends ConsumerWidget {
           backgroundColor: Colors.purple,
           child: Icon(Icons.new_label),
           onPressed: () => commentsModel.showCommentFlashBar(
-              context: context, mainModel: mainModel)),
+              context: context, mainModel: mainModel, postDoc: postDoc)),
     );
   }
 }

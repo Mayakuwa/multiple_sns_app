@@ -23,7 +23,6 @@ mixin _$FirestoreUser {
   String get uid => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   dynamic get userImageURL => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
   int get followerCount => throw _privateConstructorUsedError;
   int get followingCount => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
@@ -46,7 +45,6 @@ abstract class $FirestoreUserCopyWith<$Res> {
       {String uid,
       String userName,
       dynamic userImageURL,
-      String email,
       int followerCount,
       int followingCount,
       bool isAdmin,
@@ -70,7 +68,6 @@ class _$FirestoreUserCopyWithImpl<$Res, $Val extends FirestoreUser>
     Object? uid = null,
     Object? userName = null,
     Object? userImageURL = freezed,
-    Object? email = null,
     Object? followerCount = null,
     Object? followingCount = null,
     Object? isAdmin = null,
@@ -90,10 +87,6 @@ class _$FirestoreUserCopyWithImpl<$Res, $Val extends FirestoreUser>
           ? _value.userImageURL
           : userImageURL // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
       followerCount: null == followerCount
           ? _value.followerCount
           : followerCount // ignore: cast_nullable_to_non_nullable
@@ -130,7 +123,6 @@ abstract class _$$_FirestoreUserCopyWith<$Res>
       {String uid,
       String userName,
       dynamic userImageURL,
-      String email,
       int followerCount,
       int followingCount,
       bool isAdmin,
@@ -152,7 +144,6 @@ class __$$_FirestoreUserCopyWithImpl<$Res>
     Object? uid = null,
     Object? userName = null,
     Object? userImageURL = freezed,
-    Object? email = null,
     Object? followerCount = null,
     Object? followingCount = null,
     Object? isAdmin = null,
@@ -172,10 +163,6 @@ class __$$_FirestoreUserCopyWithImpl<$Res>
           ? _value.userImageURL
           : userImageURL // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
       followerCount: null == followerCount
           ? _value.followerCount
           : followerCount // ignore: cast_nullable_to_non_nullable
@@ -207,7 +194,6 @@ class _$_FirestoreUser implements _FirestoreUser {
       {required this.uid,
       required this.userName,
       required this.userImageURL,
-      required this.email,
       required this.followerCount,
       required this.followingCount,
       required this.isAdmin,
@@ -224,8 +210,6 @@ class _$_FirestoreUser implements _FirestoreUser {
   @override
   final dynamic userImageURL;
   @override
-  final String email;
-  @override
   final int followerCount;
   @override
   final int followingCount;
@@ -238,7 +222,7 @@ class _$_FirestoreUser implements _FirestoreUser {
 
   @override
   String toString() {
-    return 'FirestoreUser(uid: $uid, userName: $userName, userImageURL: $userImageURL, email: $email, followerCount: $followerCount, followingCount: $followingCount, isAdmin: $isAdmin, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'FirestoreUser(uid: $uid, userName: $userName, userImageURL: $userImageURL, followerCount: $followerCount, followingCount: $followingCount, isAdmin: $isAdmin, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -251,7 +235,6 @@ class _$_FirestoreUser implements _FirestoreUser {
                 other.userName == userName) &&
             const DeepCollectionEquality()
                 .equals(other.userImageURL, userImageURL) &&
-            (identical(other.email, email) || other.email == email) &&
             (identical(other.followerCount, followerCount) ||
                 other.followerCount == followerCount) &&
             (identical(other.followingCount, followingCount) ||
@@ -268,7 +251,6 @@ class _$_FirestoreUser implements _FirestoreUser {
       uid,
       userName,
       const DeepCollectionEquality().hash(userImageURL),
-      email,
       followerCount,
       followingCount,
       isAdmin,
@@ -294,7 +276,6 @@ abstract class _FirestoreUser implements FirestoreUser {
       {required final String uid,
       required final String userName,
       required final dynamic userImageURL,
-      required final String email,
       required final int followerCount,
       required final int followingCount,
       required final bool isAdmin,
@@ -310,8 +291,6 @@ abstract class _FirestoreUser implements FirestoreUser {
   String get userName;
   @override
   dynamic get userImageURL;
-  @override
-  String get email;
   @override
   int get followerCount;
   @override

@@ -1,4 +1,5 @@
 // flutter
+import 'package:first_app/domain/firestore_user/firestore_user.dart';
 import 'package:flutter/material.dart';
 // packages
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +37,7 @@ class CreatePostModel extends ChangeNotifier {
           onTap: () async {
             if (textEditingController.text.isNotEmpty) {
               // メインの動作
-              await createPost(currentUserDoc: mainModel.currentUserDoc);
+              await createPost(mainModel: mainModel);
               await controller.dismiss();
               text = "";
             } else {
@@ -55,9 +56,11 @@ class CreatePostModel extends ChangeNotifier {
     );
   }
 
-  Future<void> createPost(
-      {required DocumentSnapshot<Map<String, dynamic>> currentUserDoc}) async {
+  Future<void> createPost({required MainModel mainModel}) async {
     final Timestamp now = Timestamp.now();
+    final DocumentSnapshot<Map<String, dynamic>> currentUserDoc =
+        mainModel.currentUserDoc;
+    final FirestoreUser firestoreUser = mainModel.firestoreUser;
     final String activeUid = currentUserDoc.id;
     final String postId = returnUuidV4();
     final Post post = Post(
@@ -67,6 +70,8 @@ class CreatePostModel extends ChangeNotifier {
         uid: activeUid,
         imageURL: '',
         hashTags: [],
+        userImageURL: firestoreUser.userImageURL,
+        userName: firestoreUser.userName,
         createdAt: now,
         updatedAt: now);
     // currentUserDoc.referenceでFirebaseFirestore.instance.collection('users').doc(firestoreUser.uid)と同じ意味

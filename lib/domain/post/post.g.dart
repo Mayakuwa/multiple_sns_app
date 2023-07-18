@@ -14,6 +14,8 @@ _$_Post _$$_PostFromJson(Map<String, dynamic> json) => _$_Post(
       imageURL: json['imageURL'] as String,
       hashTags:
           (json['hashTags'] as List<dynamic>).map((e) => e as String).toList(),
+      userName: json['userName'] as String,
+      userImageURL: json['userImageURL'] as String,
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
     );
@@ -25,6 +27,8 @@ Map<String, dynamic> _$$_PostToJson(_$_Post instance) => <String, dynamic>{
       'uid': instance.uid,
       'imageURL': instance.imageURL,
       'hashTags': instance.hashTags,
+      'userName': instance.userName,
+      'userImageURL': instance.userImageURL,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };

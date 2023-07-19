@@ -153,7 +153,7 @@ class CommentsModel extends ChangeNotifier {
         postCommentId: postCommentId,
         postCommentReplyCount: 0,
         userName: firestoreUser.userName,
-        userImaheURL: '',
+        userImageURL: firestoreUser.userImageURL,
         createdAt: now,
         updatedAt: now);
     await postDoc.reference

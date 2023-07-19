@@ -49,7 +49,7 @@ class CommentPage extends ConsumerWidget {
                     final commentDoc = commentDocs[index];
                     final Comment comment =
                         Comment.fromJson(commentDoc.data()!);
-                    return CommentCard(comment: comment);
+                    return CommentCard(comment: comment, mainModel: mainModel);
                   }),
             ),
       floatingActionButton: FloatingActionButton(

@@ -15,7 +15,7 @@ abstract class Comment with _$Comment {
     required String postCommentId,
     required int postCommentReplyCount,
     required String userName,
-    required String userImaheURL,
+    required String userImageURL,
     required dynamic createdAt,
     required dynamic updatedAt,
   }) = _Comment;

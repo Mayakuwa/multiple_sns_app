@@ -35,25 +35,23 @@ class PostCard extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               UserImage(
                 lenght: 32.0,
-                userImageURL: post.uid == mainModel.firestoreUser.uid
-                    ? mainModel.firestoreUser.userImageURL
-                    : post.imageURL,
+                userImageURL: post.imageURL,
               ),
             ]),
             Row(children: [Text(post.text, style: TextStyle(fontSize: 24))]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              PostLiskeButton(
-                  mainModel: mainModel,
-                  post: post,
-                  postsModel: postsModel,
-                  postDoc: postDoc),
               InkWell(
                   child: Icon(Icons.comment),
                   onTap: () async => await commentsModel.init(
                       context: context,
                       post: post,
                       postDoc: postDoc,
-                      mainModel: mainModel))
+                      mainModel: mainModel)),
+              PostLiskeButton(
+                  mainModel: mainModel,
+                  post: post,
+                  postsModel: postsModel,
+                  postDoc: postDoc)
             ]),
           ],
         ));

@@ -13,7 +13,7 @@ _$_Comment _$$_CommentFromJson(Map<String, dynamic> json) => _$_Comment(
       postCommentId: json['postCommentId'] as String,
       postCommentReplyCount: json['postCommentReplyCount'] as int,
       userName: json['userName'] as String,
-      userImaheURL: json['userImaheURL'] as String,
+      userImageURL: json['userImageURL'] as String,
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
     );
@@ -26,7 +26,7 @@ Map<String, dynamic> _$$_CommentToJson(_$_Comment instance) =>
       'postCommentId': instance.postCommentId,
       'postCommentReplyCount': instance.postCommentReplyCount,
       'userName': instance.userName,
-      'userImaheURL': instance.userImaheURL,
+      'userImageURL': instance.userImageURL,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };

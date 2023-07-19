@@ -1,6 +1,7 @@
 // flutter
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:first_app/domain/post/post.dart';
+import 'package:first_app/models/comment_model.dart';
 import 'package:flutter/material.dart';
 // pages
 import 'package:first_app/views/signup_page.dart';
@@ -9,7 +10,7 @@ import 'package:first_app/views/account_page.dart';
 import 'package:first_app/main.dart';
 import 'package:first_app/views/main/passive_user_profile_page.dart';
 import 'package:first_app/views/admin_page.dart';
-import 'package:first_app/views/comment_page.dart';
+import 'package:first_app/views/comments/comment_page.dart';
 // models
 import 'package:first_app/models/main_model.dart';
 // domain
@@ -57,4 +58,7 @@ void toCommentPage(
         context,
         MaterialPageRoute(
             builder: (context) => CommentPage(
-                post: post, postDoc: postDoc, mainModel: mainModel)));
+                  post: post,
+                  postDoc: postDoc,
+                  mainModel: mainModel,
+                )));

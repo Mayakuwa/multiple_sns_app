@@ -12,7 +12,6 @@ final homeProvider = ChangeNotifierProvider((ref) => HomeModel());
 
 class HomeModel extends ChangeNotifier {
   bool isLoading = false;
-  late User? currentUser;
   final RefreshController refreshController = RefreshController();
   List<DocumentSnapshot<Map<String, dynamic>>> postDocs = [];
   Query<Map<String, dynamic>> returnQuery() {
@@ -30,11 +29,7 @@ class HomeModel extends ChangeNotifier {
   }
 
   Future<void> init() async {
-    startLoading();
-    final query = returnQuery();
-    final qshot = await query.get();
-    postDocs = qshot.docs;
-    endLoading();
+    await onReload();
   }
 
   void startLoading() {

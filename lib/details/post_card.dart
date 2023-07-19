@@ -35,7 +35,7 @@ class PostCard extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               UserImage(
                 lenght: 32.0,
-                userImageURL: post.imageURL,
+                userImageURL: post.userImageURL,
               ),
             ]),
             Row(children: [Text(post.text, style: TextStyle(fontSize: 24))]),

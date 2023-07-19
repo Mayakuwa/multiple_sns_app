@@ -21,7 +21,7 @@ class AdminModel extends ChangeNotifier {
     // for (final user in usersQshot.docs) {
     //   batch.update(user.reference, {'email': FieldValue.delete()});
     // }
-    // // postにuserName,userImageURLの追加
+    // postにuserName,userImageURLの追加
     // final postQshot = await currenyUserDoc.reference.collection('posts').get();
     // for (final post in postQshot.docs) {
     //   batch.update(post.reference, {

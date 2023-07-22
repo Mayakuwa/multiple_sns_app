@@ -32,16 +32,6 @@ class HomeModel extends ChangeNotifier {
     await onReload();
   }
 
-  void startLoading() {
-    isLoading = true;
-    notifyListeners();
-  }
-
-  void endLoading() {
-    isLoading = false;
-    notifyListeners();
-  }
-
   Future<void> onRefresh() async {
     refreshController.refreshCompleted();
     if (postDocs.isNotEmpty) {
@@ -58,10 +48,9 @@ class HomeModel extends ChangeNotifier {
   }
 
   Future<void> onReload() async {
-    startLoading();
     final qshot = await returnQuery().get();
     postDocs = qshot.docs;
-    endLoading();
+    notifyListeners();
   }
 
   Future<void> onLoading() async {

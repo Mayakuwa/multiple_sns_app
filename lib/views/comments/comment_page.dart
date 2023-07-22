@@ -1,9 +1,4 @@
 // flutter
-import 'package:first_app/details/reload_screen.dart';
-import 'package:first_app/details/rounded_button.dart';
-import 'package:first_app/domain/comment/comment.dart';
-import 'package:first_app/views/comments/components/comment_card.dart';
-import 'package:first_app/views/refresh_screen.dart';
 import 'package:flutter/material.dart';
 // packages
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,7 +10,13 @@ import 'package:first_app/constants/strings.dart';
 import 'package:first_app/models/main_model.dart';
 // domain
 import 'package:first_app/domain/post/post.dart';
+import 'package:first_app/domain/comment/comment.dart';
+import 'package:first_app/details/reload_screen.dart';
+import 'package:first_app/details/rounded_button.dart';
 import 'package:first_app/models/comment_model.dart';
+// views
+import 'package:first_app/views/comments/components/comment_card.dart';
+import 'package:first_app/views/refresh_screen.dart';
 
 class CommentPage extends ConsumerWidget {
   const CommentPage(
@@ -49,7 +50,12 @@ class CommentPage extends ConsumerWidget {
                     final commentDoc = commentDocs[index];
                     final Comment comment =
                         Comment.fromJson(commentDoc.data()!);
-                    return CommentCard(comment: comment, mainModel: mainModel);
+                    return CommentCard(
+                        comment: comment,
+                        mainModel: mainModel,
+                        commentsModel: commentsModel,
+                        post: post,
+                        commentDoc: commentDoc);
                   }),
             ),
       floatingActionButton: FloatingActionButton(

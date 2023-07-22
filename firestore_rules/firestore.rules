@@ -6,7 +6,7 @@ service cloud.firestore {
       // 認証されたユーザのみ閲覧できる
       allow read: if isAuthenticated();
       allow update: if isAdmin();
-      // 本人しか作成できない。消せない。
+      // 本人または管理者のみしか、作成できない。消せない。
       allow create, delete: if isTheSameUserOrAdmin(uid);
       match /tokens/{tokenId} {
         allow read, create, delete: if isTheSameUserOrAdmin(uid);
@@ -24,6 +24,9 @@ service cloud.firestore {
         match /postComments/{postCommentId} {
           allow read: if isAuthenticated();
           allow create, delete: if isTheSameUserOrAdmin(uid);
+          match /postCommentLikes/{activeUid} {
+            allow create, delete: if isTheSameUserOrAdmin(activeUid);
+          }
         }
       }
     }

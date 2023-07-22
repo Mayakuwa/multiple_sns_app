@@ -28,7 +28,6 @@ class PostsModel extends ChangeNotifier {
     final Timestamp now = Timestamp.now();
     final String activeUid = currentUserDoc.id;
     final String passiveUid = post.uid;
-    notifyListeners();
     // 自分がいいねしたことの印
     final LikePostToken likePostToken = LikePostToken(
         activeUid: activeUid,
@@ -38,6 +37,8 @@ class PostsModel extends ChangeNotifier {
         postId: postId,
         tokenId: tokenId,
         tokenType: 'likePost');
+    // tokenを追加する
+    mainModel.likePostTokens.add(likePostToken);
     await currentUserDoc.reference
         .collection('tokens')
         .doc(tokenId)
@@ -54,6 +55,7 @@ class PostsModel extends ChangeNotifier {
         .collection('postLikes')
         .doc(activeUid)
         .set(postlike.toJson());
+    notifyListeners();
   }
 
   Future<void> unlike(
@@ -65,12 +67,10 @@ class PostsModel extends ChangeNotifier {
     mainModel.likePostIds.remove(postId);
     final currentUserDoc = mainModel.currentUserDoc;
     final String activeUid = currentUserDoc.id;
-    notifyListeners();
-
     // 自分がいいねしたことの印を削除
     // いいねしているTokenを取得する。qshotというdataの塊を取得
-    final QuerySnapshot<Map<String, dynamic>> qshot = await FirebaseFirestore
-        .instance
+    final QuerySnapshot<Map<String, dynamic>> qshot = await currentUserDoc
+        .reference
         .collection('users')
         .doc(activeUid)
         .collection('tokens')
@@ -79,10 +79,14 @@ class PostsModel extends ChangeNotifier {
     // 1個しか取得していないけど、Listで複数取得
     final List<DocumentSnapshot<Map<String, dynamic>>> docs = qshot.docs;
     final DocumentSnapshot<Map<String, dynamic>> token = docs.first;
+    // tokenを削除する
+    mainModel.likePostTokens.remove(token);
     await token.reference.delete();
 
     // 投稿がいいねされたことの印を削除
     // 受動的ないいね(いいねされた投稿)がされたdataを削除する
     await postDoc.reference.collection('postLikes').doc(activeUid).delete();
+
+    notifyListeners();
   }
 }

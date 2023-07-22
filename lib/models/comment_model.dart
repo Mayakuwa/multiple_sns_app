@@ -1,4 +1,5 @@
 // flutter
+import 'package:first_app/constants/enums.dart';
 import 'package:flutter/material.dart';
 // packages
 import 'package:flash/flash.dart';
@@ -17,6 +18,8 @@ import 'package:first_app/constants/strings.dart';
 import 'package:first_app/domain/comment/comment.dart';
 import 'package:first_app/domain/firestore_user/firestore_user.dart';
 import 'package:first_app/domain/post/post.dart';
+import 'package:first_app/domain/comment_like/comment_like.dart';
+import 'package:first_app/domain/like_comment_token/like_comment_token.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final commentsProvider = ChangeNotifierProvider((ref) => CommentsModel());
@@ -55,16 +58,6 @@ class CommentsModel extends ChangeNotifier {
     indexPostId = post.postId;
   }
 
-  void startLoading() {
-    isLoading = true;
-    notifyListeners();
-  }
-
-  void endLoading() {
-    isLoading = false;
-    notifyListeners();
-  }
-
   Future<void> onRefresh(
       {required DocumentSnapshot<Map<String, dynamic>> postDoc}) async {
     refreshController.refreshCompleted();
@@ -85,10 +78,9 @@ class CommentsModel extends ChangeNotifier {
 
   Future<void> onReload(
       {required DocumentSnapshot<Map<String, dynamic>> postDoc}) async {
-    startLoading();
     final qshot = await returnQuery(postDoc: postDoc).get();
     commentDocs = qshot.docs;
-    endLoading();
+    notifyListeners();
   }
 
   Future<void> onLoading(
@@ -160,5 +152,79 @@ class CommentsModel extends ChangeNotifier {
         .collection('postComments')
         .doc(postCommentId)
         .set(comment.toJson());
+  }
+
+  Future<void> like(
+      {required Comment comment,
+      required MainModel mainModel,
+      required Post post,
+      required DocumentSnapshot<Map<String, dynamic>> commentDoc}) async {
+    // setting
+    final String postCommentId = comment.postCommentId;
+    mainModel.likeCommentIds.add(postCommentId);
+    final currentUserDoc = mainModel.currentUserDoc;
+    final String tokenId = returnUuidV4();
+    final Timestamp now = Timestamp.now();
+    final String activeUid = currentUserDoc.id;
+    final String passiveUid = post.uid;
+    // 自分がコメントにいいねしたことの印
+    final LikeCommentToken likeCommentToken = LikeCommentToken(
+        activeUid: activeUid,
+        passiveUid: passiveUid,
+        createdAt: now,
+        postCommentRef: commentDoc.reference,
+        postCommentId: postCommentId,
+        tokenId: tokenId,
+        tokenType: likeCommentTokenTypeString);
+    // token追加する
+    mainModel.likeCommentTokens.add(likeCommentToken);
+    await currentUserDoc.reference
+        .collection('tokens')
+        .doc(tokenId)
+        .set(likeCommentToken.toJson());
+    // コメントにいいねがついたことの印
+    final CommentLike commentLike = CommentLike(
+        activeUid: activeUid,
+        createdAt: now,
+        postCommentCreatorUid: comment.uid,
+        postCommentRef: commentDoc.reference,
+        postCommentId: postCommentId);
+    // いいねする人が重複しないようにuidはドキュメントIDとする。
+    await commentDoc.reference
+        .collection('postCommentLikes')
+        .doc(activeUid)
+        .set(commentLike.toJson());
+    notifyListeners();
+  }
+
+  Future<void> unlike({
+    required Comment comment,
+    required MainModel mainModel,
+    required Post post,
+    required DocumentSnapshot<Map<String, dynamic>> commentDoc,
+  }) async {
+    final String postCommentId = comment.postCommentId;
+    mainModel.likeCommentIds.remove(postCommentId);
+    final currentUserDoc = mainModel.currentUserDoc;
+    final String activeUid = currentUserDoc.id;
+    // 自分がコメントにいいねしたことの印を削除
+    // コメントにいいねしているTokenを取得する。qshotというdataの塊を取得
+    // 1個しか取得していないけど、Listで複数取得
+    final deleteLikeCommentToken = mainModel.likeCommentTokens
+        .where((element) => element.postCommentId == postCommentId)
+        .toList()
+        .first;
+    // token削除する
+    mainModel.likeCommentTokens.remove(deleteLikeCommentToken);
+    await currentUserDoc.reference
+        .collection('tokens')
+        .doc(deleteLikeCommentToken.tokenId)
+        .delete();
+    // コメントがいいねされたことの印を削除
+    // 受動的ないいね(いいねされた投稿)がされたdataを削除する
+    final DocumentReference<Map<String, dynamic>> postCommentRef =
+        deleteLikeCommentToken.postCommentRef;
+    await postCommentRef.collection('postCommentLikes').doc(activeUid).delete();
+    notifyListeners();
   }
 }

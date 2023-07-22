@@ -207,15 +207,15 @@ class CommentsModel extends ChangeNotifier {
     mainModel.likeCommentIds.remove(postCommentId);
     final currentUserDoc = mainModel.currentUserDoc;
     final String activeUid = currentUserDoc.id;
-    // 自分がコメントにいいねしたことの印を削除
-    // コメントにいいねしているTokenを取得する。qshotというdataの塊を取得
-    // 1個しか取得していないけど、Listで複数取得
     final deleteLikeCommentToken = mainModel.likeCommentTokens
         .where((element) => element.postCommentId == postCommentId)
         .toList()
         .first;
     // token削除する
     mainModel.likeCommentTokens.remove(deleteLikeCommentToken);
+    // 自分がコメントにいいねしたことの印を削除
+    // コメントにいいねしているTokenを取得する。qshotというdataの塊を取得
+    // 1個しか取得していないけど、Listで複数取得
     await currentUserDoc.reference
         .collection('tokens')
         .doc(deleteLikeCommentToken.tokenId)

@@ -67,26 +67,20 @@ class PostsModel extends ChangeNotifier {
     mainModel.likePostIds.remove(postId);
     final currentUserDoc = mainModel.currentUserDoc;
     final String activeUid = currentUserDoc.id;
+    final deleteLikePostToken = mainModel.likePostTokens
+        .where((element) => element.postId == postId)
+        .toList()
+        .first;
+    // tokenを削除する
+    mainModel.likePostTokens.remove(deleteLikePostToken);
     // 自分がいいねしたことの印を削除
     // いいねしているTokenを取得する。qshotというdataの塊を取得
-    final QuerySnapshot<Map<String, dynamic>> qshot = await currentUserDoc
-        .reference
-        .collection('users')
-        .doc(activeUid)
+    await currentUserDoc.reference
         .collection('tokens')
-        .where('postId', isEqualTo: postId)
-        .get();
-    // 1個しか取得していないけど、Listで複数取得
-    final List<DocumentSnapshot<Map<String, dynamic>>> docs = qshot.docs;
-    final DocumentSnapshot<Map<String, dynamic>> token = docs.first;
-    // tokenを削除する
-    mainModel.likePostTokens.remove(token);
-    await token.reference.delete();
-
-    // 投稿がいいねされたことの印を削除
+        .doc(deleteLikePostToken.tokenId)
+        .delete();
     // 受動的ないいね(いいねされた投稿)がされたdataを削除する
     await postDoc.reference.collection('postLikes').doc(activeUid).delete();
-
     notifyListeners();
   }
 }

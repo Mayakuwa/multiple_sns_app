@@ -21,21 +21,32 @@ class PostLiskeButton extends StatelessWidget {
   final DocumentSnapshot<Map<String, dynamic>> postDoc;
   @override
   Widget build(BuildContext context) {
-    return mainModel.likePostIds.contains(post.postId)
-        ? InkWell(
-            child: const Icon(Icons.favorite, color: Colors.red),
-            onTap: () async => await postsModel.unlike(
-                post: post,
-                postDoc: postDoc,
-                postRef: postDoc.reference,
-                mainModel: mainModel),
-          )
-        : InkWell(
-            child: const Icon(Icons.favorite),
-            onTap: () async => await postsModel.like(
-                post: post,
-                postDoc: postDoc,
-                postRef: postDoc.reference,
-                mainModel: mainModel));
+    final bool isLike = mainModel.likePostIds.contains(post.postId);
+    final int plusOneCount = post.likeCount + 1;
+    return Row(children: [
+      Container(
+        child: isLike
+            ? InkWell(
+                child: const Icon(Icons.favorite, color: Colors.red),
+                onTap: () async => await postsModel.unlike(
+                    post: post,
+                    postDoc: postDoc,
+                    postRef: postDoc.reference,
+                    mainModel: mainModel),
+              )
+            : InkWell(
+                child: const Icon(Icons.favorite),
+                onTap: () async => await postsModel.like(
+                    post: post,
+                    postDoc: postDoc,
+                    postRef: postDoc.reference,
+                    mainModel: mainModel)),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child:
+            Text(isLike ? plusOneCount.toString() : post.likeCount.toString()),
+      )
+    ]);
   }
 }

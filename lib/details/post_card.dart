@@ -28,8 +28,6 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isLike = mainModel.likePostIds.contains(post.postId);
-    final plusOneCount = post.likeCount + 1;
     return CardContainer(
         borderColor: Colors.purple,
         child: Column(
@@ -49,25 +47,11 @@ class PostCard extends StatelessWidget {
                       post: post,
                       postDoc: postDoc,
                       mainModel: mainModel)),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      PostLiskeButton(
-                          mainModel: mainModel,
-                          post: post,
-                          postsModel: postsModel,
-                          postDoc: postDoc),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(isLike
-                            ? plusOneCount.toString()
-                            : post.likeCount.toString()),
-                      )
-                    ],
-                  ),
-                ],
-              )
+              PostLiskeButton(
+                  mainModel: mainModel,
+                  post: post,
+                  postsModel: postsModel,
+                  postDoc: postDoc),
             ]),
           ],
         ));

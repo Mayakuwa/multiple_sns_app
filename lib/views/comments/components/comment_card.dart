@@ -30,8 +30,6 @@ class CommentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLike = mainModel.likeCommentIds.contains(comment.postCommentId);
-    final plusOneCount = comment.likeCount + 1;
     return CardContainer(
         borderColor: Colors.purple,
         child: Column(
@@ -47,22 +45,12 @@ class CommentCard extends StatelessWidget {
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               InkWell(child: Icon(Icons.comment), onTap: () {}),
-              Row(
-                children: [
-                  CommentLikeButton(
-                      mainModel: mainModel,
-                      comment: comment,
-                      commentsModel: commentsModel,
-                      post: post,
-                      commentDoc: commentDoc),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text(isLike
-                        ? plusOneCount.toString()
-                        : comment.likeCount.toString()),
-                  )
-                ],
-              )
+              CommentLikeButton(
+                  mainModel: mainModel,
+                  comment: comment,
+                  commentsModel: commentsModel,
+                  post: post,
+                  commentDoc: commentDoc),
             ]),
           ],
         ));

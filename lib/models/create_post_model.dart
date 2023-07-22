@@ -67,6 +67,7 @@ class CreatePostModel extends ChangeNotifier {
         postId: postId,
         likeCount: 0,
         text: text,
+        postCommentCount: 0,
         uid: activeUid,
         imageURL: '',
         hashTags: [],

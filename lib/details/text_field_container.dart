@@ -26,7 +26,7 @@ class TextFieldContainer extends StatelessWidget {
         // symmetricは左右
         // verticalは上下
         // つまり上下左右対象に余白が入るということ
-        margin: EdgeInsets.symmetric(vertical: 8.0),
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
         width: width * 0.9,
         decoration: BoxDecoration(
             border: Border.all(color: borderColor),

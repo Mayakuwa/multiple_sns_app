@@ -1,7 +1,5 @@
 // flutter
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:first_app/domain/post/post.dart';
-import 'package:first_app/models/comment_model.dart';
 import 'package:flutter/material.dart';
 // pages
 import 'package:first_app/views/signup_page.dart';
@@ -11,10 +9,14 @@ import 'package:first_app/main.dart';
 import 'package:first_app/views/main/passive_user_profile_page.dart';
 import 'package:first_app/views/admin_page.dart';
 import 'package:first_app/views/comments/comment_page.dart';
+import 'package:first_app/views/replies/replies_page.dart';
 // models
 import 'package:first_app/models/main_model.dart';
+import 'package:first_app/models/comment_model.dart';
 // domain
 import 'package:first_app/domain/firestore_user/firestore_user.dart';
+import 'package:first_app/domain/comment/comment.dart';
+import 'package:first_app/domain/post/post.dart';
 
 void toMyapp({required BuildContext context}) =>
     Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
@@ -62,3 +64,16 @@ void toCommentPage(
                   postDoc: postDoc,
                   mainModel: mainModel,
                 )));
+
+void toRepliesPage(
+        {required BuildContext context,
+        required Comment comment,
+        required DocumentSnapshot<Map<String, dynamic>> commentDoc,
+        required MainModel mainModel}) =>
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => RepliesPage(
+                comment: comment,
+                commentDoc: commentDoc,
+                mainModel: mainModel)));

@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 // componets
 import 'package:first_app/details/rounded_button.dart';
-// model
-import 'package:first_app/models/main/home_model.dart';
 // constants
 import 'package:first_app/constants/strings.dart';
 

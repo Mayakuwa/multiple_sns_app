@@ -12,7 +12,6 @@ import 'package:first_app/models/main_model.dart';
 import 'package:first_app/domain/post/post.dart';
 import 'package:first_app/domain/comment/comment.dart';
 import 'package:first_app/details/reload_screen.dart';
-import 'package:first_app/details/rounded_button.dart';
 import 'package:first_app/models/comment_model.dart';
 // views
 import 'package:first_app/views/comments/components/comment_card.dart';

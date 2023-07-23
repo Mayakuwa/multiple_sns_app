@@ -12,6 +12,7 @@ const String themeTitle = 'テーマ';
 const String profileTitle = 'プロフィール';
 const String adminTitle = '管理者';
 const String commentTitle = 'コメント';
+const String repliesTitle = 'リプライ';
 // BottomNavigationBar
 const String homeText = 'Home';
 const String searchText = 'Search';

@@ -2,7 +2,6 @@
 import 'package:first_app/constants/enums.dart';
 import 'package:flutter/material.dart';
 // packages
-import 'package:flash/flash.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 // widgetをグローバルに管理してくれるパッケージだよ
@@ -51,11 +50,12 @@ class CommentsModel extends ChangeNotifier {
     // コメントページへ遷移
     routes.toCommentPage(
         context: context, post: post, postDoc: postDoc, mainModel: mainModel);
+    final String postId = post.postId;
     // 違う投稿が押された場合には、firebaseから再取得
-    if (indexPostId != post.postId) {
+    if (indexPostId != postId) {
       await onReload(postDoc: postDoc);
     }
-    indexPostId = post.postId;
+    indexPostId = postId;
   }
 
   Future<void> onRefresh(
@@ -125,7 +125,7 @@ class CommentsModel extends ChangeNotifier {
                 await controller.dismiss();
               }
             },
-            child: Icon(Icons.send, color: Colors.purple),
+            child: const Icon(Icons.send, color: Colors.purple),
           );
         });
   }

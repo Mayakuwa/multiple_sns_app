@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/rendering.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
 
 part 'comment.freezed.dart';
 part 'comment.g.dart';
@@ -12,6 +9,7 @@ abstract class Comment with _$Comment {
     required String uid,
     required String comment,
     required int likeCount,
+    required dynamic postRef,
     required String postCommentId,
     required int postCommentReplyCount,
     required String userName,

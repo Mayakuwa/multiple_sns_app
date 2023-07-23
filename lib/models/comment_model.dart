@@ -142,6 +142,7 @@ class CommentsModel extends ChangeNotifier {
         uid: activeUid,
         comment: commentString,
         likeCount: 0,
+        postRef: postDoc.reference,
         postCommentId: postCommentId,
         postCommentReplyCount: 0,
         userName: firestoreUser.userName,

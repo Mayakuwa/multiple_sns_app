@@ -3,6 +3,7 @@ import 'package:first_app/constants/strings.dart';
 import 'package:first_app/details/reload_screen.dart';
 import 'package:first_app/domain/reply/reply.dart';
 import 'package:first_app/views/refresh_screen.dart';
+import 'package:first_app/views/replies/components/reply_card.dart';
 import 'package:flutter/material.dart';
 // flutter package
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,9 +45,17 @@ class RepliesPage extends ConsumerWidget {
                   itemBuilder: (BuildContext context, int index) {
                     final replyDoc = replyDocs[index];
                     final Reply reply = Reply.fromJson(replyDoc.data()!);
-                    return ListTile(title: Text(reply.reply));
+                    return ReplyCard(reply: reply);
                   }),
             ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.purple,
+          child: Icon(Icons.new_label),
+          onPressed: () => repliesModel.showReplyFlashBar(
+              context: context,
+              mainModel: mainModel,
+              comment: comment,
+              commentDoc: commentDoc)),
     );
   }
 }

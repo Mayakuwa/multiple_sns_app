@@ -28,6 +28,7 @@ const String uploadText = 'アップロードする';
 const String createPostTitle = '投稿を作成する';
 const String reloadText = '再読み込みを行う';
 const String createCommentText = 'コメントを作成する';
+const String createReplyText = 'リプライを作成する';
 // name
 const String aliceName = 'Alice';
 // fieldkey

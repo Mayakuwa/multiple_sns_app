@@ -1,5 +1,5 @@
 // flutter
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:first_app/models/replies_model.dart';
 import 'package:flutter/material.dart';
 // domain
 import 'package:first_app/domain/comment/comment.dart';
@@ -12,8 +12,11 @@ import 'package:first_app/models/comment_model.dart';
 import 'package:first_app/models/main_model.dart';
 // page
 import 'package:first_app/views/comments/components/comment_like_button.dart';
+// pakcage
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CommentCard extends StatelessWidget {
+class CommentCard extends ConsumerWidget {
   CommentCard(
       {Key? key,
       required this.comment,
@@ -29,7 +32,8 @@ class CommentCard extends StatelessWidget {
   final DocumentSnapshot<Map<String, dynamic>> commentDoc;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final RepliesModel repliesModel = ref.watch(repliesProvider);
     return CardContainer(
         borderColor: Colors.purple,
         child: Column(
@@ -39,12 +43,23 @@ class CommentCard extends StatelessWidget {
                 lenght: 32.0,
                 userImageURL: comment.userImageURL,
               ),
+              Text(comment.userName,
+                  style:
+                      TextStyle(fontSize: 20, overflow: TextOverflow.ellipsis)),
+              Expanded(child: SizedBox())
             ]),
             Row(children: [
               Text(comment.comment, style: TextStyle(fontSize: 24))
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-              InkWell(child: Icon(Icons.comment), onTap: () {}),
+              InkWell(
+                child: Icon(Icons.reply),
+                onTap: () async => await repliesModel.init(
+                    context: context,
+                    comment: comment,
+                    commentDoc: commentDoc,
+                    mainModel: mainModel),
+              ),
               CommentLikeButton(
                   mainModel: mainModel,
                   comment: comment,

@@ -1,5 +1,7 @@
 // flutter
+import 'package:first_app/domain/comment/comment.dart';
 import 'package:first_app/domain/reply/reply.dart';
+import 'package:first_app/views/replies/components/reply_like_button.dart';
 import 'package:flutter/material.dart';
 // domain
 import 'package:first_app/domain/reply/reply.dart';
@@ -15,8 +17,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ReplyCard extends ConsumerWidget {
-  ReplyCard({Key? key, required this.reply});
+  ReplyCard(
+      {Key? key,
+      required this.reply,
+      required this.mainModel,
+      required this.comment,
+      required this.replyDoc});
   final Reply reply;
+  final DocumentSnapshot<Map<String, dynamic>> replyDoc;
+  final MainModel mainModel;
+  final Comment comment;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,14 +50,13 @@ class ReplyCard extends ConsumerWidget {
                   style:
                       TextStyle(fontSize: 24, overflow: TextOverflow.ellipsis)),
               Expanded(child: SizedBox()),
-              Icon(Icons.favorite)
+              ReplyLikeButton(
+                  mainModel: mainModel,
+                  reply: reply,
+                  replyDoc: replyDoc,
+                  repliesModel: repliesModel,
+                  comment: comment)
             ]),
-            // replyLikeButton(
-            //     mainModel: mainModel,
-            //     reply: reply,
-            //     replysModel: replysModel,
-            //     post: post,
-            //     replyDoc: replyDoc),
           ],
         ));
   }

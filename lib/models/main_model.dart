@@ -14,6 +14,7 @@ import 'package:first_app/domain/firestore_user/firestore_user.dart';
 import 'package:first_app/domain/following_token/following_token.dart';
 import 'package:first_app/domain/like_post_token/like_post_token.dart';
 import 'package:first_app/domain/like_comment_token/like_comment_token.dart';
+import 'package:first_app/domain/like_reply_token/like_reply_token.dart';
 
 // ViewとModelを橋渡ししてくれるよ
 final mainProvider = ChangeNotifierProvider((ref) => MainModel());
@@ -33,6 +34,8 @@ class MainModel extends ChangeNotifier {
   List<String> likePostIds = [];
   List<LikeCommentToken> likeCommentTokens = [];
   List<String> likeCommentIds = [];
+  List<LikeReplyToken> likeReplyTokens = [];
+  List<String> likeReplyIds = [];
 
   MainModel() {
     init();
@@ -85,6 +88,12 @@ class MainModel extends ChangeNotifier {
               LikeCommentToken.fromJson(tokenMap);
           likeCommentTokens.add(likeCommentToken);
           likeCommentIds.add(likeCommentToken.postCommentId);
+          break;
+        case TokenType.likeReply:
+          final LikeReplyToken likeReplyToken =
+              LikeReplyToken.fromJson(tokenMap);
+          likeReplyTokens.add(likeReplyToken);
+          likeReplyIds.add(likeReplyToken.postCommentReplyId);
           break;
         case TokenType.mistake:
           break;

@@ -1,4 +1,4 @@
-enum TokenType { following, likePost, likeComment, mistake }
+enum TokenType { following, likePost, likeComment, likeReply, mistake }
 
 // 引数にTokenType.followingを入れるとStringの'following'がreturnされる
 String returnTokenTypeString({required TokenType tokenType}) =>
@@ -13,6 +13,9 @@ String likePostTokenTypeString =
 String likeCommentTokenTypeString =
     returnTokenTypeString(tokenType: TokenType.likeComment);
 
+String likeReplyTokenTypeString =
+    returnTokenTypeString(tokenType: TokenType.likeReply);
+
 TokenType mapToTokenType({required Map<String, dynamic> tokenMap}) {
   final String tokenTypeString = tokenMap['tokenType'];
   if (tokenTypeString == followingTokenTypeString) {
@@ -21,6 +24,8 @@ TokenType mapToTokenType({required Map<String, dynamic> tokenMap}) {
     return TokenType.likePost;
   } else if (tokenTypeString == likeCommentTokenTypeString) {
     return TokenType.likeComment;
+  } else if (tokenTypeString == likeReplyTokenTypeString) {
+    return TokenType.likeReply;
   } else {
     return TokenType.mistake;
   }

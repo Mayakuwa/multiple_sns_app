@@ -179,6 +179,7 @@ class CommentsModel extends ChangeNotifier {
         tokenType: likeCommentTokenTypeString);
     // token追加する
     mainModel.likeCommentTokens.add(likeCommentToken);
+    notifyListeners();
     await currentUserDoc.reference
         .collection('tokens')
         .doc(tokenId)
@@ -195,7 +196,6 @@ class CommentsModel extends ChangeNotifier {
         .collection('postCommentLikes')
         .doc(activeUid)
         .set(commentLike.toJson());
-    notifyListeners();
   }
 
   Future<void> unlike({
@@ -214,6 +214,7 @@ class CommentsModel extends ChangeNotifier {
         .first;
     // token削除する
     mainModel.likeCommentTokens.remove(deleteLikeCommentToken);
+    notifyListeners();
     // 自分がコメントにいいねしたことの印を削除
     // コメントにいいねしているTokenを取得する。qshotというdataの塊を取得
     // 1個しか取得していないけど、Listで複数取得
@@ -222,10 +223,8 @@ class CommentsModel extends ChangeNotifier {
         .doc(deleteLikeCommentToken.tokenId)
         .delete();
     // コメントがいいねされたことの印を削除
-    // 受動的ないいね(いいねされた投稿)がされたdataを削除する
     final DocumentReference<Map<String, dynamic>> postCommentRef =
         deleteLikeCommentToken.postCommentRef;
     await postCommentRef.collection('postCommentLikes').doc(activeUid).delete();
-    notifyListeners();
   }
 }

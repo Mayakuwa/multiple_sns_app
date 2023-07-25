@@ -20,6 +20,7 @@ Reply _$ReplyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Reply {
+// rulesのresource.data.uid
   String get uid => throw _privateConstructorUsedError;
   String get reply => throw _privateConstructorUsedError;
   int get likeCount => throw _privateConstructorUsedError;
@@ -211,6 +212,7 @@ class _$_Reply implements _Reply {
   factory _$_Reply.fromJson(Map<String, dynamic> json) =>
       _$$_ReplyFromJson(json);
 
+// rulesのresource.data.uid
   @override
   final String uid;
   @override
@@ -298,7 +300,7 @@ abstract class _Reply implements Reply {
 
   factory _Reply.fromJson(Map<String, dynamic> json) = _$_Reply.fromJson;
 
-  @override
+  @override // rulesのresource.data.uid
   String get uid;
   @override
   String get reply;
